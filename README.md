@@ -2,6 +2,7 @@
 
 A new Flutter project.
 
+돈 땃지 미!
 내 귀에 도청장치!
 
 ## Getting Started
