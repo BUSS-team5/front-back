@@ -42,7 +42,7 @@ class _MyAppState extends State<bus_route> {
                 mapType: _mapType,
                 locationButtonEnable: true,
                 indoorEnable: true,
-                initLocationTrackingMode: LocationTrackingMode.Follow,
+                initLocationTrackingMode: LocationTrackingMode.NoFollow,
                 initialCameraPosition: _initialPosition,
                 markers: <Marker>[
                   Marker(markerId: '대학원생 김재원', position: LatLng(36.14578, 128.39278)),
