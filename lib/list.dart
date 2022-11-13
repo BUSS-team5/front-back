@@ -52,7 +52,6 @@ class ListWidget extends StatelessWidget {
         }
       }
     }
-
     temp.sort((a, b) => a.arrtime!.compareTo(b.arrtime!));
 
     return ListView.separated(
@@ -70,6 +69,7 @@ class ListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Provider.of를 통해 데이터를 접근한다. builder만을 업데이트 하기 위해 listen은 false로 한다.
+
     _evProvider = Provider.of<EvProvider>(context, listen: false);
     if(end == 1 || end == 2){
       _evProvider.loadEvs("GMB132"); // EvProvider에 loadEvs()의 접근
@@ -87,10 +87,9 @@ class ListWidget extends StatelessWidget {
             ],
           );
         }
-
-        // 데이터가 없으면 CircularProgressIndicator 수행(로딩)
+        // 데이터가 없으면 "버스정보없음"을 출력
         return Center(
-          child: CircularProgressIndicator(),
+          child: Text("버스정보없음"),
         );
       }
       ),
