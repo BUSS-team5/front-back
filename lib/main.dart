@@ -1,14 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:test_project/model/provider.dart';
 import 'dart:async';
 import 'package:naver_map_plugin/naver_map_plugin.dart';
+
+import 'package:provider/provider.dart';
 
 import 'bus_arrival.dart';
 import 'bus_route.dart';
 import 'restaurant.dart';
 import 'house.dart';
+import 'dart:io';
 // 페이지 import
 
-void main() => runApp(MyApp()); //main에서 MyApp이란 클래스를 호출한다.
+void main() {
+  HttpOverrides.global = NoCheckCertificateHttpOverrides();
+  runApp( MyApp());
+} //main에서 MyApp이란 클래스를 호출한다.
+
+class NoCheckCertificateHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
+}
 
 
 class MyApp extends StatelessWidget { //MyApp 클래스 선언
@@ -16,7 +33,14 @@ class MyApp extends StatelessWidget { //MyApp 클래스 선언
     return MaterialApp(
       debugShowCheckedModeBanner: false, //오른쪽위 debugBanner 없애기
       title: 'BUSS',
-      home: MyPage(),
+      home: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+              create: (BuildContext context) => EvProvider()
+          )
+        ],
+        child: MyPage(),
+      ),
     );
   }
 }
