@@ -47,7 +47,7 @@ class ListWidget extends StatelessWidget {
 
     for(int i  = 1; i < evs.length; i++){
       for(int j = 1; j < node.length; j++){
-        if(evs[i].bussnum == node[j] && temp.length < 10){
+        if(evs[i].bussnum == node[j] && temp.length < 3){
           temp.add(evs[i]);
         }
       }

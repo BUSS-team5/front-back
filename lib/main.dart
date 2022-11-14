@@ -10,6 +10,7 @@ import 'bus_arrival.dart';
 import 'bus_route.dart';
 import 'restaurant.dart';
 import 'house.dart';
+import 'setting.dart';
 import 'dart:io';
 // 페이지 import
 
@@ -57,6 +58,7 @@ class _MyPageState extends State<MyPage> {
     bus_route(),
     restaurant(),
     house(),
+    setting(),
   ];
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,6 +85,10 @@ class _MyPageState extends State<MyPage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.house_outlined),
             label: 'house',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: 'setting',
           ),
         ],
       ),
