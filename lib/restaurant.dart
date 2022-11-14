@@ -1,6 +1,25 @@
 import 'package:flutter/material.dart'; //flutter의 package를 가져오는 코드 반드시 필요
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+class Todo{
+  String address;
+  String review;
+  double lat;
+  double lng;
+  String title;
+
+  Todo(this.address, this.review, this.lat, this.lng, this.title);
+}
 
 class restaurant extends StatelessWidget {
+  final firestore = FirebaseFirestore.instance;
+
+  getData() async{
+    var result = await firestore.collection('dataset/구미역/카페').doc('스타벅스 구미점').get();
+    print(result.data());
+  }
   @override
   Widget build(BuildContext context) {
     var white;
@@ -43,7 +62,7 @@ class restaurant extends StatelessWidget {
                       }),
                 );
               },
-            )
+            ),
           ],
         )
     );

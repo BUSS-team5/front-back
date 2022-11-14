@@ -3,8 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:test_project/model/provider.dart';
 import 'dart:async';
 import 'package:naver_map_plugin/naver_map_plugin.dart';
-
 import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'bus_arrival.dart';
 import 'bus_route.dart';
@@ -13,8 +15,12 @@ import 'house.dart';
 import 'dart:io';
 // 페이지 import
 
-void main() {
+void main() async {
   HttpOverrides.global = NoCheckCertificateHttpOverrides();
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options:  DefaultFirebaseOptions.currentPlatform,
+  );
   runApp( MyApp());
 } //main에서 MyApp이란 클래스를 호출한다.
 
