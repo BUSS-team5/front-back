@@ -1,55 +1,131 @@
+
 import 'package:flutter/material.dart';
-import 'package:test_project/oneroom.dart';
-import 'package:test_project/tworoom.dart';
 
-class house extends StatefulWidget {
+class house extends StatelessWidget {
   @override
-  _MyAppState createState() => _MyAppState();
-}
-
-class _MyAppState extends State<house> {
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('부동산 정보'),
-        centerTitle: true, // 중앙 정렬
-        elevation: 0.0,
-      ),
-      drawer: Drawer(
-        // Add a ListView to the drawer. This ensures the user can scroll
-        // through the options in the drawer if there isn't enough vertical
-        // space to fit everything.
-        child: ListView(
-          // Important: Remove any padding from the ListView.
-          padding: EdgeInsets.zero,
-          children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
+    return new MaterialApp(
+      home: new DefaultTabController(
+        length: 2,
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text("부동산 정보"),
+            centerTitle: true,
+            bottom: new TabBar(
+                isScrollable: true,
+                indicator: BoxDecoration(
+                    color: Colors.black26,
+                    borderRadius:  BorderRadius.circular(25.0)
+                ) ,
+                tabs: [
+                  new Tab(text: '원룸', icon: new Icon(Icons.house)),
+                  new Tab(text: '투룸/빌라', icon: new Icon(Icons.apartment)),
+                ]),
+          ),
+          body: new TabBarView(
+            children: [
+              new ListView(
+                children: list,
               ),
-              child: Text('category'),
-            ),
-            ListTile(
-              title: const Text('원룸'),
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => oneroom())
-                );
-              },
-            ),
-            ListTile(
-              title: const Text('투룸/빌라'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => tworoom())
-                );
-              },
-            ),
-          ],
+              new ListView(
+                children: list1,
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
+}
+
+List<Widget> list = <Widget>[
+  new Divider(),
+  new ListTile(
+    title: new Text('이름 / 주소',
+        style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
+    subtitle: new Text('리뷰',),
+    leading: new Icon(
+      Icons.restaurant,
+      color: Colors.blue[500],
+    ),
+  ),
+  new Divider(),
+  new ListTile(
+    title: new Text('이름 / 주소',
+        style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
+    subtitle: new Text('리뷰'),
+
+
+    leading: new Icon(
+      Icons.restaurant,
+      color: Colors.blue[500],
+    ),
+  ),
+  new Divider(),
+  new ListTile(
+    title: new Text('이름 / 주소',
+        style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
+    subtitle: new Text('리뷰',),
+    leading: new Icon(
+      Icons.restaurant,
+      color: Colors.blue[500],
+    ),
+  ),
+  new Divider(),
+  new ListTile(
+    title: new Text('이름 / 주소',
+        style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
+    subtitle: new Text('리뷰',),
+    leading: new Icon(
+      Icons.restaurant,
+      color: Colors.blue[500],
+    ),
+  ),
+];
+
+List<Widget> list1 = <Widget>[
+  new Divider(),
+  new ListTile(
+    title: new Text('이름 / 주소',
+        style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
+    subtitle: new Text('리뷰',),
+    leading: new Icon(
+      Icons.restaurant,
+      color: Colors.blue[500],
+    ),
+  ),
+  new Divider(),
+  new ListTile(
+    title: new Text('이름 / 주소',
+        style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
+    subtitle: new Text('리뷰',),
+    leading: new Icon(
+      Icons.restaurant,
+      color: Colors.blue[500],
+    ),
+  ),
+  new Divider(),
+  new ListTile(
+    title: new Text('이름 / 주소',
+        style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
+    subtitle: new Text('리뷰',),
+    leading: new Icon(
+      Icons.restaurant,
+      color: Colors.blue[500],
+    ),
+  ),
+  new Divider(),
+  new ListTile(
+    title: new Text('이름 / 주소',
+        style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
+    subtitle: new Text('리뷰',),
+    leading: new Icon(
+      Icons.restaurant,
+      color: Colors.blue[500],
+    ),
+  ),
+];
+
+void main() {
+  runApp(new house());
 }

@@ -63,6 +63,11 @@ class _MyAppState extends State<bus_route> {
                 ],
               ),
             ),
+        SizedBox(width: 8),
+        Card(
+        child: const Text('버스 노선 정보'),
+          
+    ),
           ],
         ),
       ),

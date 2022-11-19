@@ -1,55 +1,147 @@
+
 import 'package:flutter/material.dart';
-import 'package:test_project/cafe.dart';
-import 'package:test_project/food.dart';
 
-class restaurant extends StatefulWidget {
+class restaurant extends StatelessWidget {
   @override
-  _MyAppState createState() => _MyAppState();
-}
-
-class _MyAppState extends State<restaurant > {
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('맛집 정보'),
-        centerTitle: true, // 중앙 정렬
-        elevation: 0.0,
-      ),
-      drawer: Drawer(
-        // Add a ListView to the drawer. This ensures the user can scroll
-        // through the options in the drawer if there isn't enough vertical
-        // space to fit everything.
-        child: ListView(
-          // Important: Remove any padding from the ListView.
-          padding: EdgeInsets.zero,
-          children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
+    return new MaterialApp(
+      home: new DefaultTabController(
+        length: 2,
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text("맛집 정보"),
+            centerTitle: true,
+            bottom: new TabBar(
+                isScrollable: true,
+                indicator: BoxDecoration(
+                    color: Colors.black26,
+                    borderRadius:  BorderRadius.circular(25.0)
+                ) ,
+                tabs: [
+                  new Tab(text: '카페', icon: new Icon(Icons.local_cafe)),
+                  new Tab(text: '음식점', icon: new Icon(Icons.restaurant_menu)),
+                ]),
+          ),
+          body: new TabBarView(
+            children: [
+              new ListView(
+                children: list,
               ),
-              child: Text('category'),
-            ),
-            ListTile(
-              title: const Text('음식점'),
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => food())
-                );
-              },
-            ),
-            ListTile(
-              title: const Text('카페'),
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => cafe())
-                );
-              },
-            ),
-          ],
+              new ListView(
+                children: Twolist,
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
+}
+
+List<Widget> list = <Widget>[
+  new ListTile(
+    title: new Text('이름 / 주소',
+        style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
+    subtitle: new Text('리뷰'),
+    leading: new Icon(
+      Icons.restaurant,
+      color: Colors.blue[500],
+    ),
+  ),
+  new Divider(),
+  new ListTile(
+    title: new Text('이름 / 주소',
+        style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
+    subtitle: new Text('리뷰'),
+    leading: new Icon(
+      Icons.restaurant,
+      color: Colors.blue[500],
+    ),
+  ),
+  new Divider(),
+  new ListTile(
+    title: new Text('이름 / 주소',
+        style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
+    subtitle: new Text('리뷰'),
+    leading: new Icon(
+      Icons.restaurant,
+      color: Colors.blue[500],
+    ),
+  ),
+  new Divider(),
+  new ListTile(
+    title: new Text('이름 / 주소',
+        style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
+    subtitle: new Text('리뷰'),
+    leading: new Icon(
+      Icons.restaurant,
+      color: Colors.blue[500],
+    ),
+  ),
+];
+
+List<Widget> Twolist = <Widget>[
+  new ListTile(
+    title: new Text('이름 / 주소',
+        style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
+    subtitle: new Text('리뷰'),
+    leading: new Icon(
+      Icons.restaurant,
+      color: Colors.blue[500],
+    ),
+  ),
+  new Divider(),
+  new ListTile(
+    title: new Text('이름 / 주소',
+        style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
+    subtitle: new Text('리뷰'),
+    leading: new Icon(
+      Icons.restaurant,
+      color: Colors.blue[500],
+    ),
+  ),
+  new Divider(),
+  new ListTile(
+    title: new Text('이름 / 주소', 
+        style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
+    subtitle: new Text('리뷰'),
+    leading: new Icon(
+      Icons.restaurant,
+      color: Colors.blue[500],
+    ),
+  ),
+  new Divider(),
+  new ListTile(
+    title: new Text('이름 / 주소',
+        style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
+    subtitle: new Text('리뷰',),
+    leading: new Icon(
+      Icons.restaurant,
+      color: Colors.blue[500],
+    ),
+),
+    new Divider(),
+    new ListTile(
+      title: new Text('이름 / 주소',
+          style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
+      subtitle: new Text('리뷰',),
+      leading: new Icon(
+        Icons.restaurant,
+        color: Colors.blue[500],
+      ),
+    ),
+  new Divider(),
+  new ListTile(
+    title: new Text('이름 / 주소',
+        style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
+    subtitle: new Text('리뷰'),
+    leading: new Icon(
+      Icons.restaurant,
+      color: Colors.blue[500],
+    ),
+  ),
+];
+
+void main() {
+  runApp(new restaurant());
 }

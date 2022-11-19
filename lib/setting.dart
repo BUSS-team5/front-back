@@ -1,80 +1,138 @@
+
 import 'package:flutter/material.dart';
 
-class setting extends StatefulWidget {
+class setting extends StatelessWidget {
   @override
-  _MyAppState createState() => _MyAppState();
-}
-
-class _MyAppState extends State<setting> {
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('설정'),
-        centerTitle: true, // 중앙 정렬
-        elevation: 0.0,
-      ),
-      drawer: Drawer(
-        // Add a ListView to the drawer. This ensures the user can scroll
-        // through the options in the drawer if there isn't enough vertical
-        // space to fit everything.
-        child: ListView(
-          // Important: Remove any padding from the ListView.
-          padding: EdgeInsets.zero,
-          children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
+    return new MaterialApp(
+      home: new DefaultTabController(
+        length: 2,
+        child: Scaffold(
+            appBar: AppBar(
+              title: Text("설정"),
+              centerTitle: true,
+            bottom: new TabBar(
+                isScrollable: true,
+                indicator: BoxDecoration(
+                    color: Colors.black26,
+                    borderRadius:  BorderRadius.circular(25.0)
+                ) ,
+                tabs: [
+              new Tab(text: '이용사항', icon: new Icon(Icons.settings)),
+              new Tab(text: '문의사항', icon: new Icon(Icons.question_answer)),
+          ]),
+          ),
+          body: new TabBarView(
+            children: [
+              new ListView(
+                children: list,
               ),
-              child: Text('category'),
-            ),
-            ListTile(
-              title: const Text('이용약관'),
-              onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: const Text('공지사항'),
-              onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: const Text('자주 묻는 질문'),
-              onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: const Text('오픈소스 라이선스'),
-              onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: const Text('어플리케이션 문의'),
-              onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
-                Navigator.pop(context);
-              },
-            ),
-          ],
+              new ListView(
+                children: list1,
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
+}
+
+List<Widget> list = <Widget>[
+  new Divider(),
+  new ListTile(
+    title: new Text('이름 / 주소',
+        style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
+    subtitle: new Text('리뷰',),
+    leading: new Icon(
+      Icons.restaurant,
+      color: Colors.blue[500],
+    ),
+  ),
+new Divider(),
+new ListTile(
+title: new Text('이름 / 주소',
+style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
+subtitle: new Text('리뷰',),
+leading: new Icon(
+Icons.restaurant,
+color: Colors.blue[500],
+),
+),
+    new Divider(),
+    new ListTile(
+      title: new Text('이름 / 주소',
+          style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
+      subtitle: new Text('리뷰',),
+      leading: new Icon(
+        Icons.restaurant,
+        color: Colors.blue[500],
+      ),
+    ),
+    new Divider(),
+    new ListTile(
+      title: new Text('이름 / 주소',
+          style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
+      subtitle: new Text('리뷰',),
+      leading: new Icon(
+        Icons.restaurant,
+        color: Colors.blue[500],
+      ),
+    ),
+    new Divider(),
+    new ListTile(
+      title: new Text('이름 / 주소',
+          style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
+      subtitle: new Text('리뷰',),
+      leading: new Icon(
+        Icons.restaurant,
+        color: Colors.blue[500],
+      ),
+    ),
+];
+
+List<Widget> list1 = <Widget>[
+  new ListTile(
+    title: new Text('이름',
+        style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
+    subtitle: new Text(''),
+    leading: new Icon(
+      Icons.restaurant,
+      color: Colors.blue[500],
+    ),
+  ),
+  new Divider(),
+  new ListTile(
+    title: new Text('이름',
+        style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
+    subtitle: new Text(''),
+    leading: new Icon(
+      Icons.restaurant,
+      color: Colors.blue[500],
+    ),
+  ),
+  new Divider(),
+  new ListTile(
+    title: new Text('이름',
+        style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
+    subtitle: new Text(''),
+    leading: new Icon(
+      Icons.restaurant,
+      color: Colors.blue[500],
+    ),
+  ),
+  new Divider(),
+  new ListTile(
+    title: new Text('이름',
+        style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
+    subtitle: new Text(''),
+    leading: new Icon(
+      Icons.restaurant,
+      color: Colors.blue[500],
+    ),
+  ),
+];
+
+void main() {
+  runApp(new setting());
 }
