@@ -1,7 +1,16 @@
 
 import 'package:flutter/material.dart';
+import 'dart:async';
+import 'package:naver_map_plugin/naver_map_plugin.dart';
 
 class restaurant extends StatelessWidget {
+  var _buscontroller = TextEditingController(); // controller 연결
+  Completer<NaverMapController> _controller = Completer();
+  MapType _mapType = MapType.Basic;
+  final CameraPosition _initialPosition = new CameraPosition(
+    target: LatLng(36.14578, 128.39278),
+  );
+
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
@@ -24,17 +33,33 @@ class restaurant extends StatelessWidget {
           ),
           body: new TabBarView(
             children: [
-              new ListView(
-                children: list,
-              ),
-              new ListView(
-                children: Twolist,
+              SizedBox(
+                height: 300,
+                child: NaverMap(
+                  onMapCreated: onMapCreated,
+                  useSurface: true,
+                  mapType: _mapType,
+                  locationButtonEnable: true,
+                  indoorEnable: true,
+                  initLocationTrackingMode: LocationTrackingMode.NoFollow,
+                  initialCameraPosition: _initialPosition,
+                  markers: <Marker>[
+                    Marker(
+                        markerId: '대학원생 김재원',
+                        position: LatLng(36.14578, 128.39278)),
+                  ],
+                ),
               ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  void onMapCreated(NaverMapController controller) {
+    if (_controller.isCompleted) _controller = Completer();
+    _controller.complete(controller);
   }
 }
 
@@ -120,26 +145,7 @@ List<Widget> Twolist = <Widget>[
       color: Colors.blue[500],
     ),
 ),
-    new Divider(),
-    new ListTile(
-      title: new Text('이름 / 주소',
-          style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
-      subtitle: new Text('리뷰',),
-      leading: new Icon(
-        Icons.restaurant,
-        color: Colors.blue[500],
-      ),
-    ),
-  new Divider(),
-  new ListTile(
-    title: new Text('이름 / 주소',
-        style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
-    subtitle: new Text('리뷰'),
-    leading: new Icon(
-      Icons.restaurant,
-      color: Colors.blue[500],
-    ),
-  ),
+
 ];
 
 void main() {
