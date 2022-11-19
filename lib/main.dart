@@ -3,24 +3,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:test_project/model/provider.dart';
 import 'dart:async';
 import 'package:naver_map_plugin/naver_map_plugin.dart';
+
 import 'package:provider/provider.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'bus_arrival.dart';
 import 'bus_route.dart';
 import 'restaurant.dart';
 import 'house.dart';
+import 'setting.dart';
 import 'dart:io';
 // 페이지 import
 
-void main() async {
-  HttpOverrides.global = NoCheckCertificateHttpOverrides();
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options:  DefaultFirebaseOptions.currentPlatform,
-  );
+void main() {
+  HttpOverrides.global = NoCheckCertificateHttpOverrides(); // API 키 권한 받아오기
   runApp( MyApp());
 } //main에서 MyApp이란 클래스를 호출한다.
 
@@ -58,11 +53,12 @@ class MyPage extends StatefulWidget {
 
 class _MyPageState extends State<MyPage> {
   int currentIndex =0;
-  final screens = [ //이게 하나하나의 화면이되고, Text등을 사용하거나, dart파일에 있는 class를 넣는다.
-    bus_arrival(),
-    bus_route(),
-    restaurant(),
-    house(),
+  final screens = [
+    bus_arrival(), // 버스 도착 페이지
+    bus_route(), // 버스 노선 페이지
+    restaurant(), // 음식점 및 카페 페이지
+    house(), // 부동산 페이지
+    setting(), // 설정 페이지
   ];
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,7 +70,7 @@ class _MyPageState extends State<MyPage> {
         // navigation 기능
         type: BottomNavigationBarType.fixed,
         items: [
-          BottomNavigationBarItem(
+          BottomNavigationBarItem( // 페이지 이동 함수
             icon: Icon(Icons.bus_alert),
             label: 'bus arrival',
           ),
@@ -89,6 +85,10 @@ class _MyPageState extends State<MyPage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.house_outlined),
             label: 'house',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: 'setting',
           ),
         ],
       ),

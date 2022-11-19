@@ -11,7 +11,8 @@ class _MyAppState extends State<bus_arrival> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('버스 도착 정보'),
+          title: Text('버스 도착 정보'
+          ),
           centerTitle: true, // 중앙 정렬
           elevation: 0.0,
         ),
@@ -43,7 +44,7 @@ class _MyAppState extends State<bus_arrival> {
                     child: ListWidget(
                       end: 2,
                     ),
-                  )
+                  ),
                 ]
             )
         )

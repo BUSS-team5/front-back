@@ -1,89 +1,153 @@
-import 'package:flutter/material.dart'; //flutter의 package를 가져오는 코드 반드시 필요
-import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Todo{
-  String address;
-  String review;
-  double lat;
-  double lng;
-  String title;
-
-  Todo(this.address, this.review, this.lat, this.lng, this.title);
-}
+import 'package:flutter/material.dart';
+import 'dart:async';
+import 'package:naver_map_plugin/naver_map_plugin.dart';
 
 class restaurant extends StatelessWidget {
-  final firestore = FirebaseFirestore.instance;
+  var _buscontroller = TextEditingController(); // controller 연결
+  Completer<NaverMapController> _controller = Completer();
+  MapType _mapType = MapType.Basic;
+  final CameraPosition _initialPosition = new CameraPosition(
+    target: LatLng(36.14578, 128.39278),
+  );
 
-  getData() async{
-    var result = await firestore.collection('dataset/구미역/카페').doc('스타벅스 구미점').get();
-    print(result.data());
-  }
   @override
   Widget build(BuildContext context) {
-    var white;
-    return Scaffold(
-        appBar: AppBar(
-          title: Text('음식점 정보'),
-          centerTitle: true, // 중앙 정렬
-          elevation: 0.0,
-        ),
-        body:
-        Stack(
-          children: <Widget>[
-            Positioned(
-              top: 0,
-              bottom: 150,
-              left: 0,
-              right: 0,
-              child: Container(
-                color: Colors.white,
-                child: Text(
-                  "지도",
+    return new MaterialApp(
+      home: new DefaultTabController(
+        length: 2,
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text("맛집 정보"),
+            centerTitle: true,
+            bottom: new TabBar(
+                isScrollable: true,
+                indicator: BoxDecoration(
+                    color: Colors.black26,
+                    borderRadius:  BorderRadius.circular(25.0)
+                ) ,
+                tabs: [
+                  new Tab(text: '카페', icon: new Icon(Icons.local_cafe)),
+                  new Tab(text: '음식점', icon: new Icon(Icons.restaurant_menu)),
+                ]),
+          ),
+          body: new TabBarView(
+            children: [
+              SizedBox(
+                height: 300,
+                child: NaverMap(
+                  onMapCreated: onMapCreated,
+                  useSurface: true,
+                  mapType: _mapType,
+                  locationButtonEnable: true,
+                  indoorEnable: true,
+                  initLocationTrackingMode: LocationTrackingMode.NoFollow,
+                  initialCameraPosition: _initialPosition,
+                  markers: <Marker>[
+                    Marker(
+                        markerId: '대학원생 김재원',
+                        position: LatLng(36.14578, 128.39278)),
+                  ],
                 ),
               ),
-            ),
-            DraggableScrollableSheet(
-              initialChildSize: 0.3,
-              minChildSize: 0.3,
-              maxChildSize: 0.5,
-              builder: (BuildContext context, ScrollController scrollController){
-                return Container(
-                  color: Colors.white,
-                  child: ListView.builder(
-                      controller: scrollController,
-                      itemCount: 20,
-                      itemBuilder: (BuildContext context, int index){
-                        return ListTile(
-                          title : Text('음식점 정보'),
-                          onTap: () => _showDialog(context, '사진'),
-                        );
-                      }),
-                );
-              },
-            ),
-          ],
-        )
+            ],
+          ),
+        ),
+      ),
     );
   }
 
-  // API에 있는 showDialog 함수와 이름이 같아서 밑줄(_) 접두사(private 함수)
-  void _showDialog(BuildContext context, String text) {
-    // 경고창을 보여주는 가장 흔한 방법.
-    showDialog(
-        context: context,
-        builder: (BuildContext ctx) {
-          return AlertDialog(
-            title: Text('선택 완료!'),
-            content:
-            Text('$text 건물 정보'),
-            // 주석으로 막아놓은 actions 매개변수도 확인해 볼 것.
-            //actions: <Widget>[
-            //     FlatButton(child: Text('확인'), onPressed: () => Navigator.pop(context)),
-            // ],
-          );
-        }
-    );
+  void onMapCreated(NaverMapController controller) {
+    if (_controller.isCompleted) _controller = Completer();
+    _controller.complete(controller);
   }
+}
+
+List<Widget> list = <Widget>[
+  new ListTile(
+    title: new Text('이름 / 주소',
+        style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
+    subtitle: new Text('리뷰'),
+    leading: new Icon(
+      Icons.restaurant,
+      color: Colors.blue[500],
+    ),
+  ),
+  new Divider(),
+  new ListTile(
+    title: new Text('이름 / 주소',
+        style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
+    subtitle: new Text('리뷰'),
+    leading: new Icon(
+      Icons.restaurant,
+      color: Colors.blue[500],
+    ),
+  ),
+  new Divider(),
+  new ListTile(
+    title: new Text('이름 / 주소',
+        style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
+    subtitle: new Text('리뷰'),
+    leading: new Icon(
+      Icons.restaurant,
+      color: Colors.blue[500],
+    ),
+  ),
+  new Divider(),
+  new ListTile(
+    title: new Text('이름 / 주소',
+        style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
+    subtitle: new Text('리뷰'),
+    leading: new Icon(
+      Icons.restaurant,
+      color: Colors.blue[500],
+    ),
+  ),
+];
+
+List<Widget> Twolist = <Widget>[
+  new ListTile(
+    title: new Text('이름 / 주소',
+        style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
+    subtitle: new Text('리뷰'),
+    leading: new Icon(
+      Icons.restaurant,
+      color: Colors.blue[500],
+    ),
+  ),
+  new Divider(),
+  new ListTile(
+    title: new Text('이름 / 주소',
+        style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
+    subtitle: new Text('리뷰'),
+    leading: new Icon(
+      Icons.restaurant,
+      color: Colors.blue[500],
+    ),
+  ),
+  new Divider(),
+  new ListTile(
+    title: new Text('이름 / 주소', 
+        style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
+    subtitle: new Text('리뷰'),
+    leading: new Icon(
+      Icons.restaurant,
+      color: Colors.blue[500],
+    ),
+  ),
+  new Divider(),
+  new ListTile(
+    title: new Text('이름 / 주소',
+        style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
+    subtitle: new Text('리뷰',),
+    leading: new Icon(
+      Icons.restaurant,
+      color: Colors.blue[500],
+    ),
+),
+
+];
+
+void main() {
+  runApp(new restaurant());
 }

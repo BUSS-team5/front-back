@@ -7,9 +7,9 @@ class ListWidget extends StatelessWidget {
   int? end;
   ListWidget({Key? key, required this.end}) : super(key: key);
 
-  late EvProvider _evProvider; // EvProvider 호출
+  late EvProvider _evProvider; // 버스 이름/도착 정보 받아오기
 
-  Widget _makeEvOne(Ev ev) {
+  Widget _makeEvOne(Ev ev) { // 리스트를 컨테이너로 제작
     var arrtemp = ev.arrtime! / 60;
     var buf = arrtemp.toInt();
     return Column(
@@ -35,7 +35,7 @@ class ListWidget extends StatelessWidget {
   }
 
   // 리스트 뷰
-  Widget _makeListView(List<Ev> evs) {
+  Widget _makeListView(List<Ev> evs) { // 버스 리스트 만들기
     var node = new List<String>.empty(growable: true);
     if(end == 1){
       node.addAll(["191", "193", "51-1", "190-3", "891-2", "57", "190", "192", "195", "900", "196"]);
@@ -47,7 +47,7 @@ class ListWidget extends StatelessWidget {
 
     for(int i  = 1; i < evs.length; i++){
       for(int j = 1; j < node.length; j++){
-        if(evs[i].bussnum == node[j] && temp.length < 10){
+        if(evs[i].bussnum == node[j] && temp.length < 3){
           temp.add(evs[i]);
         }
       }

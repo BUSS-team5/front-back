@@ -8,6 +8,7 @@ class bus_route extends StatefulWidget {
 }
 
 class _MyAppState extends State<bus_route> {
+  var _buscontroller = TextEditingController(); // controller 연결
   Completer<NaverMapController> _controller = Completer();
   MapType _mapType = MapType.Basic;
   final CameraPosition _initialPosition = new CameraPosition(
@@ -15,6 +16,12 @@ class _MyAppState extends State<bus_route> {
   );
 
   @override
+  void dispose() // controller 해제
+  {
+    _buscontroller.dispose();
+    super.dispose();
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -26,16 +33,21 @@ class _MyAppState extends State<bus_route> {
         padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              '버스 노선 정보',
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 2.0),
-            ),
-            Expanded(
+          children: <Widget>[
+            Row(children: <Widget>[
+              Expanded(
+                child: TextField(
+                  controller: _buscontroller,
+                ),
+              ),
+              ElevatedButton(
+                onPressed: () {},
+                child: Text('번호 검색'),
+              ),
+            ]),
+
+            SizedBox(
+              height: 300,
               child: NaverMap(
                 onMapCreated: onMapCreated,
                 useSurface: true,
@@ -45,10 +57,17 @@ class _MyAppState extends State<bus_route> {
                 initLocationTrackingMode: LocationTrackingMode.NoFollow,
                 initialCameraPosition: _initialPosition,
                 markers: <Marker>[
-                  Marker(markerId: '대학원생 김재원', position: LatLng(36.14578, 128.39278)),
+                  Marker(
+                      markerId: '대학원생 김재원',
+                      position: LatLng(36.14578, 128.39278)),
                 ],
               ),
             ),
+        SizedBox(width: 8),
+        Card(
+        child: const Text('버스 노선 정보'),
+          
+    ),
           ],
         ),
       ),
