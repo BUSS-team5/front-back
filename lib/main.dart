@@ -9,7 +9,6 @@ import 'package:provider/provider.dart';
 import 'bus_arrival.dart';
 import 'bus_route.dart';
 import 'restaurant.dart';
-import 'house.dart';
 import 'setting.dart';
 import 'dart:io';
 // 페이지 import
@@ -31,16 +30,22 @@ class NoCheckCertificateHttpOverrides extends HttpOverrides {
 
 class MyApp extends StatelessWidget { //MyApp 클래스 선언
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false, //오른쪽위 debugBanner 없애기
-      title: 'BUSS',
-      home: MultiProvider(
-        providers: [
-          ChangeNotifierProvider(
-              create: (BuildContext context) => EvProvider()
-          )
-        ],
-        child: MyPage(),
+    return GestureDetector(
+      onTap: () {
+        FocusManager.instance.primaryFocus?.unfocus(); // 키보드 닫기 이벤트
+      },
+
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false, //오른쪽위 debugBanner 없애기
+        title: 'BUSS',
+        home: MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+                create: (BuildContext context) => EvProvider()
+            )
+          ],
+          child: MyPage(),
+        ),
       ),
     );
   }
@@ -57,7 +62,6 @@ class _MyPageState extends State<MyPage> {
     bus_arrival(), // 버스 도착 페이지
     bus_route(), // 버스 노선 페이지
     restaurant(), // 음식점 및 카페 페이지
-    house(), // 부동산 페이지
     setting(), // 설정 페이지
   ];
   Widget build(BuildContext context) {
@@ -72,23 +76,19 @@ class _MyPageState extends State<MyPage> {
         items: [
           BottomNavigationBarItem( // 페이지 이동 함수
             icon: Icon(Icons.bus_alert),
-            label: 'bus arrival',
+            label: '실시간 버스',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.bus_alert_sharp),
-            label: 'bus route',
+            label: '버스 노선',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.restaurant_menu),
-            label: 'restaurant',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.house_outlined),
-            label: 'house',
+            label: '생활 지도',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
-            label: 'setting',
+            label: '정보',
           ),
         ],
       ),

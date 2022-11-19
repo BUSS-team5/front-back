@@ -2,6 +2,7 @@
 
 A new Flutter project.
 
+자살마렵다
 돈 땃지 미!
 내 귀에 도청장치!
 
