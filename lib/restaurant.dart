@@ -3,7 +3,12 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:naver_map_plugin/naver_map_plugin.dart';
 
-class restaurant extends StatelessWidget {
+class restaurant extends StatefulWidget {
+  @override
+  State<restaurant> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<restaurant> {
   var _buscontroller = TextEditingController(); // controller 연결
   Completer<NaverMapController> _controller = Completer();
   MapType _mapType = MapType.Basic;
@@ -11,49 +16,46 @@ class restaurant extends StatelessWidget {
     target: LatLng(36.14578, 128.39278),
   );
 
+  List<String> dropdownList = ['옥계방면', '구미역방면'];
+  String selectedDropdown = '옥계방면';
+
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      home: new DefaultTabController(
-        length: 2,
-        child: Scaffold(
-          appBar: AppBar(
-            title: Text("맛집 정보"),
-            centerTitle: true,
-            bottom: new TabBar(
-                isScrollable: true,
-                indicator: BoxDecoration(
-                    color: Colors.black26,
-                    borderRadius:  BorderRadius.circular(25.0)
-                ) ,
-                tabs: [
-                  new Tab(text: '카페', icon: new Icon(Icons.local_cafe)),
-                  new Tab(text: '음식점', icon: new Icon(Icons.restaurant_menu)),
-                ]),
-          ),
-          body: new TabBarView(
-            children: [
-              SizedBox(
-                height: 300,
-                child: NaverMap(
-                  onMapCreated: onMapCreated,
-                  useSurface: true,
-                  mapType: _mapType,
-                  locationButtonEnable: true,
-                  indoorEnable: true,
-                  initLocationTrackingMode: LocationTrackingMode.NoFollow,
-                  initialCameraPosition: _initialPosition,
-                  markers: <Marker>[
-                    Marker(
-                        markerId: '대학원생 김재원',
-                        position: LatLng(36.14578, 128.39278)),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
+    return Scaffold(
+      appBar: AppBar(                   // 앱바
+        title: Text('맛집 정보'),        // 앱바 title
+        centerTitle: true,              // 중앙 정렬
+        elevation: 0.0,
       ),
+      body:
+        Stack(
+          children: <Widget> [
+            NaverMap(
+              onMapCreated: onMapCreated,
+              useSurface: true,
+              mapType: _mapType,
+              locationButtonEnable: true,
+              indoorEnable: true,
+              initLocationTrackingMode: LocationTrackingMode.NoFollow,
+              initialCameraPosition: _initialPosition,
+            ),
+            
+            DropdownButton(
+              value: selectedDropdown,
+              items: dropdownList.map((String item) {
+                return DropdownMenuItem<String>(
+                  child: Text('$item'),
+                  value: item,
+                );
+              }).toList(),
+              onChanged: (dynamic value) {
+                setState(() {
+                  selectedDropdown = value;
+                });
+              },
+            ),
+          ],
+        )
     );
   }
 
@@ -62,6 +64,7 @@ class restaurant extends StatelessWidget {
     _controller.complete(controller);
   }
 }
+
 
 List<Widget> list = <Widget>[
   new ListTile(
