@@ -40,19 +40,24 @@ class _MyAppState extends State<restaurant> {
               initialCameraPosition: _initialPosition,
             ),
             
-            DropdownButton(
-              value: selectedDropdown,
-              items: dropdownList.map((String item) {
-                return DropdownMenuItem<String>(
-                  child: Text('$item'),
-                  value: item,
-                );
-              }).toList(),
-              onChanged: (dynamic value) {
-                setState(() {
-                  selectedDropdown = value;
-                });
-              },
+            Container(
+              margin: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+              padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+              color: Colors.white,
+              child: DropdownButton(
+                value: selectedDropdown,
+                items: dropdownList.map((String item) {
+                  return DropdownMenuItem<String>(
+                    child: Text('$item'),
+                    value: item,
+                  );
+                }).toList(),
+                onChanged: (dynamic value) {
+                  setState(() {
+                    selectedDropdown = value!;
+                  });
+                },
+              ),
             ),
           ],
         )
