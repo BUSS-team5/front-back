@@ -6,7 +6,7 @@ class setting extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
       home: new DefaultTabController(
-        length: 2,
+        length: 3,
         child: Scaffold(
             appBar: AppBar(
               title: Text("설정"),
@@ -19,7 +19,8 @@ class setting extends StatelessWidget {
                 ) ,
                 tabs: [
               new Tab(text: '이용사항', icon: new Icon(Icons.settings)),
-              new Tab(text: '문의사항', icon: new Icon(Icons.question_answer)),
+              new Tab(text: '버전정보', icon: new Icon(Icons.question_answer)),
+                  new Tab(text: '개발자 정보', icon: new Icon(Icons.hail)),
           ]),
           ),
           body: new TabBarView(
@@ -29,6 +30,9 @@ class setting extends StatelessWidget {
               ),
               new ListView(
                 children: list1,
+              ),
+              new ListView(
+                children: list2,
               ),
             ],
           ),
@@ -41,95 +45,65 @@ class setting extends StatelessWidget {
 List<Widget> list = <Widget>[
   new Divider(),
   new ListTile(
-    title: new Text('이름 / 주소',
-        style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
-    subtitle: new Text('리뷰',),
-    leading: new Icon(
-      Icons.restaurant,
-      color: Colors.blue[500],
+    title: new Text('이용사항',
+        style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 15.0)),
+    subtitle: new Text('정보',),
+    /* leading: new Icon(
+      Icons.
+      color: Colors.blue[500], */
     ),
+
+  new Divider(),
+  new ListTile(
+    title: new Text('이용사항',
+        style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 15.0)),
+    subtitle: new Text('정보',),
+    /* leading: new Icon(
+      Icons.
+      color: Colors.blue[500], */
   ),
-new Divider(),
-new ListTile(
-title: new Text('이름 / 주소',
-style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
-subtitle: new Text('리뷰',),
-leading: new Icon(
-Icons.restaurant,
-color: Colors.blue[500],
-),
-),
-    new Divider(),
-    new ListTile(
-      title: new Text('이름 / 주소',
-          style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
-      subtitle: new Text('리뷰',),
-      leading: new Icon(
-        Icons.restaurant,
-        color: Colors.blue[500],
-      ),
-    ),
-    new Divider(),
-    new ListTile(
-      title: new Text('이름 / 주소',
-          style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
-      subtitle: new Text('리뷰',),
-      leading: new Icon(
-        Icons.restaurant,
-        color: Colors.blue[500],
-      ),
-    ),
-    new Divider(),
-    new ListTile(
-      title: new Text('이름 / 주소',
-          style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
-      subtitle: new Text('리뷰',),
-      leading: new Icon(
-        Icons.restaurant,
-        color: Colors.blue[500],
-      ),
-    ),
 ];
 
 List<Widget> list1 = <Widget>[
-  new ListTile(
-    title: new Text('이름',
-        style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
-    subtitle: new Text(''),
-    leading: new Icon(
-      Icons.restaurant,
-      color: Colors.blue[500],
-    ),
-  ),
+new Divider(),
+new ListTile(
+title: new Text('버전 정보',
+style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 15.0)),
+subtitle: new Text('정보',),
+/* leading: new Icon(
+      Icons.
+      color: Colors.blue[500], */
+),
+
+new Divider(),
+new ListTile(
+title: new Text('버전 정보',
+style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 15.0)),
+subtitle: new Text('정보',),
+/* leading: new Icon(
+      Icons.
+      color: Colors.blue[500], */
+),
+];
+List<Widget> list2 = <Widget>[
   new Divider(),
   new ListTile(
-    title: new Text('이름',
-        style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
-    subtitle: new Text(''),
-    leading: new Icon(
-      Icons.restaurant,
-      color: Colors.blue[500],
-    ),
+    title: new Text('개발자 정보',
+        style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 15.0)),
+    subtitle: new Text('정보',),
+    /* leading: new Icon(
+      Icons.
+      color: Colors.blue[500], */
   ),
+
   new Divider(),
   new ListTile(
-    title: new Text('이름',
-        style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
-    subtitle: new Text(''),
-    leading: new Icon(
-      Icons.restaurant,
-      color: Colors.blue[500],
-    ),
-  ),
-  new Divider(),
-  new ListTile(
-    title: new Text('이름',
-        style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
-    subtitle: new Text(''),
-    leading: new Icon(
-      Icons.restaurant,
-      color: Colors.blue[500],
-    ),
+    title: new Text('개발자 정보',
+        style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 15.0)),
+    subtitle: new Text('정보',),
+    /* leading: new Icon(
+      Icons.
+      color: Colors.blue[500], */
   ),
 ];
 
