@@ -2,6 +2,8 @@ import 'package:flutter/material.dart'; //flutter의 package를 가져오는 코
 import 'dart:async';
 import 'package:naver_map_plugin/naver_map_plugin.dart';
 import 'package:toggle_switch/toggle_switch.dart';
+//import 'firebase_options.dart';   // **파이어베이스 연동하기
+//import 'package:cloud_firestore/cloud_firestore.dart';  // **파이어베이스 연동하기
 
 // 페이지 호출
 class restaurant extends StatefulWidget {
@@ -14,10 +16,17 @@ class _MyAppState extends State<restaurant> {
   var _buscontroller = TextEditingController(); // controller 연결
   Completer<NaverMapController> _controller = Completer(); // 컨트롤러 생성자
   MapType _mapType = MapType.Basic; // 지도 타입 = 베이직 타입
+
   final CameraPosition _initialPosition = new CameraPosition(
     // 띄웠을 떄 첫 좌표
     target: LatLng(36.14578, 128.39278),
   );
+
+  List<String> dropdownList1 = ['옥계', '신평', '어쩌고'];
+  String selectedDropdown1 = '옥계';
+
+  List<String> dropdownList2 = ['191', '192', '194'];
+  String selectedDropdown2 = '191';
 
   @override
   void dispose() // controller 해제
@@ -28,23 +37,43 @@ class _MyAppState extends State<restaurant> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('생활 지도'), centerTitle: true, elevation: 0.0),
+        appBar: AppBar(
+            title: Text('생활 지도'),
+            centerTitle: true, elevation: 0.0
+        ),
         body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: Column(
             children: <Widget>[
               Row(children: <Widget>[
                 // 검색 위젯
-                Expanded(
-                  // 텍스트필드 생성
-                  child: TextField(
-                    controller: _buscontroller,
-                  ),
+                DropdownButton(
+                  value: selectedDropdown1,
+                  items: dropdownList1.map((String item) {
+                    return DropdownMenuItem<String>(
+                      child: Text('$item'),
+                      value: item,
+                    );
+                  }).toList(),
+                  onChanged: (dynamic value) {
+                    setState(() {
+                      selectedDropdown1 = value;
+                    });
+                  },
                 ),
-                ElevatedButton(
-                  // 검색 버튼 생성
-                  onPressed: () {},
-                  child: Text('검색'),
+                DropdownButton(
+                  value: selectedDropdown2,
+                  items: dropdownList2.map((String item) {
+                    return DropdownMenuItem<String>(
+                      child: Text('$item'),
+                      value: item,
+                    );
+                  }).toList(),
+                  onChanged: (dynamic value) {
+                    setState(() {
+                      selectedDropdown2 = value;
+                    });
+                  },
                 ),
               ]),
               Stack(
@@ -71,19 +100,18 @@ class _MyAppState extends State<restaurant> {
                   Container(
                     padding:EdgeInsets.all(20),
                     child: ToggleSwitch(
-                      minWidth: 80.0,
+                      minWidth: 60.0,
                       minHeight: 40.0,
                       initialLabelIndex: 1,
                       cornerRadius:20.0,
                       activeFgColor: Colors.white,
                       inactiveBgColor: Colors.grey,
                       inactiveFgColor: Colors.white,
-                      totalSwitches: 4,
+                      totalSwitches: 3,
                       icons: [
                         Icons.restaurant,
                         Icons.coffee,
                         Icons.house,
-                        Icons.apartment,
                       ],
                       iconSize: 20.0,
                       activeBgColor: [Colors.blue],

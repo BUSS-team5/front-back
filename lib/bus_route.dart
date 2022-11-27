@@ -17,6 +17,12 @@ class _MyAppState extends State<bus_route> {
     target: LatLng(36.14578, 128.39278),
   );
 
+  List<String> dropdownList1 = ['옥계', '신평', '어쩌고'];
+  String selectedDropdown1 = '1';
+
+  List<String> dropdownList2 = ['191', '192', '194'];
+  String selectedDropdown2 = '1';
+
   @override
   void dispose() // controller 해제
   {
@@ -38,14 +44,33 @@ class _MyAppState extends State<bus_route> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Row(children: <Widget>[               // 검색 위젯
-                Expanded(                           // 텍스트필드 생성
-                  child: TextField(
-                    controller: _buscontroller,
+                DropdownButton(
+                    value: selectedDropdown1,
+                    items: dropdownList1.map((String item) {
+                      return DropdownMenuItem<String>(
+                        child: Text('$item'),
+                        value: item,
+                      );
+                    }).toList(),
+                    onChanged: (dynamic value) {
+                      setState(() {
+                        selectedDropdown1 = value;
+                      });
+                    },
                   ),
-                ),
-                ElevatedButton(                     // 검색 버튼 생성
-                  onPressed: () {},
-                  child: Text('검색'),
+                DropdownButton(
+                  value: selectedDropdown2,
+                  items: dropdownList2.map((String item) {
+                    return DropdownMenuItem<String>(
+                      child: Text('$item'),
+                      value: item,
+                    );
+                  }).toList(),
+                  onChanged: (dynamic value) {
+                    setState(() {
+                      selectedDropdown2 = value;
+                    });
+                  },
                 ),
               ]),
               SizedBox(                             // 지도 생성
