@@ -2,8 +2,108 @@ import 'package:flutter/material.dart'; //flutter의 package를 가져오는 코
 import 'dart:async';
 import 'package:naver_map_plugin/naver_map_plugin.dart';
 import 'package:toggle_switch/toggle_switch.dart';
-//import 'firebase_options.dart';   // **파이어베이스 연동하기
-//import 'package:cloud_firestore/cloud_firestore.dart';  // **파이어베이스 연동하기
+import 'package:cloud_firestore/cloud_firestore.dart';  // **파이어베이스 연동하기
+
+class Cafe{
+  int? review;
+  String? name;
+  String? distance;
+  String? holiday;
+  String? number;
+  GeoPoint? latlng;
+  String? address;
+
+  Cafe({this.review, this.name, this.distance, this.holiday, this.number, this.latlng, this.address});
+
+  Cafe.fromJson(Map<String, dynamic>? json){
+    var temp;
+
+    if(json?["review"] is String){
+      temp = int.tryParse(json?["review"] ?? "");
+    }
+
+    review = temp ?? 0;
+    name = json?['name'] ?? "";
+    distance = json?['distance'] ?? "";
+    holiday = json?['holiday'] ?? "";
+    number = json?['number'] ?? "";
+    latlng = json?['position'] ?? GeoPoint(0, 0);
+    address = json?['address'] ?? "";
+  }
+
+  Cafe.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> snapshot) : this.fromJson(snapshot.data());
+
+  Cafe.fromQuerySnapshot(QueryDocumentSnapshot<Map<String, dynamic>> snapshot) : this.fromJson(snapshot.data());
+}
+
+class CafeService{
+  static final CafeService _cafeService = CafeService._internal();
+
+  factory CafeService() => _cafeService;
+
+  CafeService._internal();
+
+  Future<List<Cafe>> getCafe(int cnt, String route) async{
+    CollectionReference<Map<String, dynamic>>? _collection = FirebaseFirestore.instance.collection('dataset/${route}/카페');
+    if(cnt == 0){
+      _collection = FirebaseFirestore.instance.collection('dataset/${route}/음식점');
+    }
+    else{
+      _collection = FirebaseFirestore.instance.collection('dataset/${route}/카페');
+    }
+    QuerySnapshot<Map<String, dynamic>> querySnapshot = await _collection.get();
+
+    List<Cafe> cafes = [];
+    for(var doc in querySnapshot.docs){
+      Cafe cafemodel = Cafe.fromQuerySnapshot(doc);
+      cafes.add(cafemodel);
+    }
+
+    //cafes = querySnapshot.docs.map((e) => Cafe.fromJson(e.data())).toList();
+    //print(cafes.length);
+    return cafes;
+  }
+}
+
+class Land{
+  int? a;
+  int? b;
+  GeoPoint? latlng;
+
+  Land({this.a, this.b, thislatlng});
+
+  Land.fromJson(Map<String, dynamic>? json){
+    a = json?['보증금'] ?? 0;
+    b = json?['월세'] ?? 0;
+    latlng = json?['주소'] ?? GeoPoint(0, 0);
+  }
+
+  Land.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> snapshot) : this.fromJson(snapshot.data());
+  Land.fromQuerySnapshot(QueryDocumentSnapshot<Map<String, dynamic>> snapshot) : this.fromJson(snapshot.data());
+}
+
+class LandService{
+  static final LandService _landService = LandService._internal();
+
+  factory LandService() => _landService;
+
+  LandService._internal();
+
+  Future<List<Land>> getland(String route) async {
+    CollectionReference<Map<String, dynamic>> _collection = FirebaseFirestore.instance.collection('dataset/${route}/부동산');
+    QuerySnapshot<Map<String, dynamic>> querySnapshot = await _collection.get();
+
+    List<Land> lands = [];
+    for(var doc in querySnapshot.docs){
+      Land landmodel = Land.fromQuerySnapshot(doc);
+      lands.add(landmodel);
+    }
+    return lands;
+  }
+}
+
+
+CameraPosition? _initialPosition;
 
 // 페이지 호출
 class restaurant extends StatefulWidget {
@@ -16,23 +116,97 @@ class _MyAppState extends State<restaurant> {
   var _buscontroller = TextEditingController(); // controller 연결
   Completer<NaverMapController> _controller = Completer(); // 컨트롤러 생성자
   MapType _mapType = MapType.Basic; // 지도 타입 = 베이직 타입
+  late Future myFuture;
+  var idx = 0;
 
-  final CameraPosition _initialPosition = new CameraPosition(
-    // 띄웠을 떄 첫 좌표
-    target: LatLng(36.14578, 128.39278),
-  );
+  List<Marker> temp = [];
 
-  List<String> dropdownList1 = ['옥계', '구미역'];
-  String selectedDropdown1 = '옥계';
+  List<String> dropdownList1 = ['구미역', '금오공대종점','롯데마트','삼구아파트',
+                              '신평시장','엘지연수원','오성예식장앞','옥계중학교'];
+  String selectedDropdown1 = '구미역';
 
-  List<String> dropdownList2 = ['190', '191', '194'];
-  String selectedDropdown2 = '191';
+
+  getland(String route) async{
+    Future<List<Land>> testlist = LandService().getland(route);
+    List<Land> _list = [];
+    temp.clear();
+    _list = await testlist;
+    for(int i = 0; i < _list.length; i++){
+      if(i == 0){
+        var lat = _list[i].latlng?.latitude ?? 0;
+        var lng = _list[i].latlng?.longitude ?? 0;
+        _initialPosition = CameraPosition(target: LatLng(lat, lng));
+      }
+
+      temp.add(Marker(
+        markerId: i.toString(),
+        position: LatLng(_list[i].latlng!.latitude, _list[i].latlng!.longitude),
+        captionText: "${_list[i].b}/${_list[i].a}",
+      ));
+    }
+    return _list[0].latlng;
+  }
+
+  getcafe(int cnt, String route) async {
+    Future<List<Cafe>> _testlist = CafeService().getCafe(cnt, route);
+    List<Cafe> _cafes = [];
+    temp.clear();
+    _cafes = await _testlist;
+    for(int i = 0; i < _cafes.length; i++){
+      if(i == 0){
+        var lat = _cafes[i].latlng?.latitude ?? 0;
+        var lng = _cafes[i].latlng?.longitude ?? 0;
+        _initialPosition = CameraPosition(target: LatLng(lat, lng));
+      }
+      if(_cafes[i].distance == '100'){
+        temp.add(Marker(
+          markerId: _cafes[i].name!,
+          position: LatLng(_cafes[i].latlng!.latitude, _cafes[i].latlng!.longitude),
+          captionText: _cafes[i].name!,
+        ));
+      }
+      if(_cafes[i].distance == '300'){
+        temp.add(Marker(
+          markerId: _cafes[i].name!,
+          position: LatLng(_cafes[i].latlng!.latitude, _cafes[i].latlng!.longitude),
+          captionText: _cafes[i].name!,
+         // onMarkerTab: _onMarkerTap(),
+        ));
+      }
+      if(_cafes[i].distance == '500'){
+        temp.add(Marker(
+          markerId: _cafes[i].name!,
+          position: LatLng(_cafes[i].latlng!.latitude, _cafes[i].latlng!.longitude),
+          captionText: _cafes[i].name!,
+        ));
+      }
+    }
+    return _cafes[0].latlng;
+  }
+
+  getdata(int cnt, String route) async {
+    if(cnt == 0){
+      await getcafe(cnt, route);
+    }
+    if(cnt == 1){
+      await getcafe(cnt, route);
+    }
+    if(cnt == 2){
+      await getland(route);
+    }
+    return temp.length;
+  }
 
   @override
   void dispose() // controller 해제
   {
     _buscontroller.dispose();
     super.dispose();
+  }
+
+  void initState(){
+    super.initState();
+    myFuture = getdata(0, '구미역');
   }
 
   Widget build(BuildContext context) {
@@ -61,48 +235,46 @@ class _MyAppState extends State<restaurant> {
                     });
                   },
                 ),
-                DropdownButton(
-                  value: selectedDropdown2,
-                  items: dropdownList2.map((String item) {
-                    return DropdownMenuItem<String>(
-                      child: Text('$item'),
-                      value: item,
-                    );
-                  }).toList(),
-                  onChanged: (dynamic value) {
-                    setState(() {
-                      selectedDropdown2 = value;
-                    });
-                  },
-                ),
               ]),
               Stack(
                   children: <Widget> [
-                    SizedBox(
-                      height: 500,
-                      child: NaverMap(
-                        onMapCreated: onMapCreated,
-                        useSurface: true,
-                        mapType: _mapType,
-                        locationButtonEnable: true,
-                        indoorEnable: true,
-                        initLocationTrackingMode: LocationTrackingMode.NoFollow,
-                        initialCameraPosition: _initialPosition,
-                        markers: <Marker>[
-                          // 마커 생성
-                          Marker(
-                              markerId: '대학원생 나현진',
-                              position: LatLng(36.14578, 128.39278)
-                          ),
-                        ],
-                      ),
+                    FutureBuilder(
+                        future: myFuture,
+                        builder: (BuildContext context, AsyncSnapshot snapshot){
+                          if(snapshot.hasData == false){
+                            return CircularProgressIndicator();
+                          }
+                          else if(snapshot.hasError){
+                            return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  'Error: ${snapshot.error}'
+                                ),
+                            );
+                          }
+                          else{
+                            return SizedBox(
+                              height: 500,
+                              child: NaverMap(
+                                onMapCreated: onMapCreated,
+                                useSurface: true,
+                                mapType: _mapType,
+                                locationButtonEnable: true,
+                                indoorEnable: true,
+                                initLocationTrackingMode: LocationTrackingMode.NoFollow,
+                                initialCameraPosition: _initialPosition,
+                                markers: temp,
+                              ),
+                            );
+                          }
+                        },
                     ),
                     Container(
                         padding:EdgeInsets.all(20),
                         child: ToggleSwitch(
                           minWidth: 60.0,
                           minHeight: 40.0,
-                          initialLabelIndex: 1,
+                          initialLabelIndex: idx,
                           cornerRadius:20.0,
                           activeFgColor: Colors.white,
                           inactiveBgColor: Colors.grey,
@@ -116,7 +288,11 @@ class _MyAppState extends State<restaurant> {
                           iconSize: 20.0,
                           activeBgColor: [Colors.blue],
                           onToggle: (index){
-                            print('swiched to: $index');
+                            setState(() {
+                              idx = index!;
+                              myFuture = getdata(index, selectedDropdown1);
+
+                            });
                           },
                         )
                     )
@@ -127,9 +303,18 @@ class _MyAppState extends State<restaurant> {
         )
     );
   }
-
-  void onMapCreated(NaverMapController controller) {
+  
+  void onMapCreated(NaverMapController controller) async {
     if (_controller.isCompleted) _controller = Completer();
+    await controller.moveCamera(CameraUpdate.toCameraPosition(_initialPosition!));
     _controller.complete(controller);
+  }
+
+
+  void _onMarkerTap(Marker? marker,Map<String,int> iconSize){
+   int pos = temp.indexWhere((m) => m.markerId == marker!.markerId);
+   setState(() {
+     temp[pos].captionText = "선택됨";
+   });
   }
 }

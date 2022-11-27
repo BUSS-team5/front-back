@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:test_project/model/provider.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 import 'bus_arrival.dart';
 import 'bus_route.dart';
@@ -10,8 +12,12 @@ import 'setting.dart';
 import 'dart:io';
 // 페이지 import
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   HttpOverrides.global = NoCheckCertificateHttpOverrides(); // API 키 권한 받아오기
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(MyApp());
 } //main에서 MyApp이란 클래스를 호출한다.
 
