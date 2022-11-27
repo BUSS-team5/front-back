@@ -1,8 +1,7 @@
 # test_project
 
 A new Flutter project.
-
-자살마렵다
+!!!!!뻐쓰앱입니당!!!!!
 돈 땃지 미!
 내 귀에 도청장치!
 

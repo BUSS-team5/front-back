@@ -1,64 +1,101 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'; //flutter의 package를 가져오는 코드 반드시 필요
 import 'dart:async';
 import 'package:naver_map_plugin/naver_map_plugin.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 
+// 페이지 호출
 class restaurant extends StatefulWidget {
   @override
-  State<restaurant> createState() => _MyAppState();
+  _MyAppState createState() => _MyAppState();
 }
 
+// 페이지 생성
 class _MyAppState extends State<restaurant> {
   var _buscontroller = TextEditingController(); // controller 연결
-  Completer<NaverMapController> _controller = Completer();
-  MapType _mapType = MapType.Basic;
+  Completer<NaverMapController> _controller = Completer(); // 컨트롤러 생성자
+  MapType _mapType = MapType.Basic; // 지도 타입 = 베이직 타입
   final CameraPosition _initialPosition = new CameraPosition(
+    // 띄웠을 떄 첫 좌표
     target: LatLng(36.14578, 128.39278),
   );
 
-  List<String> dropdownList = ['옥계방면', '구미역방면'];
-  String selectedDropdown = '옥계방면';
-
   @override
+  void dispose() // controller 해제
+  {
+    _buscontroller.dispose();
+    super.dispose();
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(                   // 앱바
-        title: Text('맛집 정보'),        // 앱바 title
-        centerTitle: true,              // 중앙 정렬
-        elevation: 0.0,
-      ),
-      body:
-        Stack(
-          children: <Widget> [
-            NaverMap(
-              onMapCreated: onMapCreated,
-              useSurface: true,
-              mapType: _mapType,
-              locationButtonEnable: true,
-              indoorEnable: true,
-              initLocationTrackingMode: LocationTrackingMode.NoFollow,
-              initialCameraPosition: _initialPosition,
-            ),
-            
-            Container(
-              margin: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-              padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
-              color: Colors.white,
-              child: DropdownButton(
-                value: selectedDropdown,
-                items: dropdownList.map((String item) {
-                  return DropdownMenuItem<String>(
-                    child: Text('$item'),
-                    value: item,
-                  );
-                }).toList(),
-                onChanged: (dynamic value) {
-                  setState(() {
-                    selectedDropdown = value!;
-                  });
-                },
+        appBar: AppBar(title: Text('생활 지도'), centerTitle: true, elevation: 0.0),
+        body: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Column(
+            children: <Widget>[
+              Row(children: <Widget>[
+                // 검색 위젯
+                Expanded(
+                  // 텍스트필드 생성
+                  child: TextField(
+                    controller: _buscontroller,
+                  ),
+                ),
+                ElevatedButton(
+                  // 검색 버튼 생성
+                  onPressed: () {},
+                  child: Text('검색'),
+                ),
+              ]),
+              Stack(
+                children: <Widget> [
+                  SizedBox(
+                    height: 500,
+                    child: NaverMap(
+                      onMapCreated: onMapCreated,
+                      useSurface: true,
+                      mapType: _mapType,
+                      locationButtonEnable: true,
+                      indoorEnable: true,
+                      initLocationTrackingMode: LocationTrackingMode.NoFollow,
+                      initialCameraPosition: _initialPosition,
+                      markers: <Marker>[
+                        // 마커 생성
+                        Marker(
+                            markerId: '대학원생 나현진',
+                            position: LatLng(36.14578, 128.39278)
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    padding:EdgeInsets.all(20),
+                    child: ToggleSwitch(
+                      minWidth: 80.0,
+                      minHeight: 40.0,
+                      initialLabelIndex: 1,
+                      cornerRadius:20.0,
+                      activeFgColor: Colors.white,
+                      inactiveBgColor: Colors.grey,
+                      inactiveFgColor: Colors.white,
+                      totalSwitches: 4,
+                      icons: [
+                        Icons.restaurant,
+                        Icons.coffee,
+                        Icons.house,
+                        Icons.apartment,
+                      ],
+                      iconSize: 20.0,
+                      activeBgColor: [Colors.blue],
+                      onToggle: (index){
+                        print('swiched to: $index');
+                      },
+                    )
+                  )
+                ]
               ),
-            ),
-          ],
+            ],
+          ),
         )
     );
   }
@@ -67,94 +104,4 @@ class _MyAppState extends State<restaurant> {
     if (_controller.isCompleted) _controller = Completer();
     _controller.complete(controller);
   }
-}
-
-
-List<Widget> list = <Widget>[
-  new ListTile(
-    title: new Text('이름 / 주소',
-        style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
-    subtitle: new Text('리뷰'),
-    leading: new Icon(
-      Icons.restaurant,
-      color: Colors.blue[500],
-    ),
-  ),
-  new Divider(),
-  new ListTile(
-    title: new Text('이름 / 주소',
-        style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
-    subtitle: new Text('리뷰'),
-    leading: new Icon(
-      Icons.restaurant,
-      color: Colors.blue[500],
-    ),
-  ),
-  new Divider(),
-  new ListTile(
-    title: new Text('이름 / 주소',
-        style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
-    subtitle: new Text('리뷰'),
-    leading: new Icon(
-      Icons.restaurant,
-      color: Colors.blue[500],
-    ),
-  ),
-  new Divider(),
-  new ListTile(
-    title: new Text('이름 / 주소',
-        style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
-    subtitle: new Text('리뷰'),
-    leading: new Icon(
-      Icons.restaurant,
-      color: Colors.blue[500],
-    ),
-  ),
-];
-
-List<Widget> Twolist = <Widget>[
-  new ListTile(
-    title: new Text('이름 / 주소',
-        style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
-    subtitle: new Text('리뷰'),
-    leading: new Icon(
-      Icons.restaurant,
-      color: Colors.blue[500],
-    ),
-  ),
-  new Divider(),
-  new ListTile(
-    title: new Text('이름 / 주소',
-        style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
-    subtitle: new Text('리뷰'),
-    leading: new Icon(
-      Icons.restaurant,
-      color: Colors.blue[500],
-    ),
-  ),
-  new Divider(),
-  new ListTile(
-    title: new Text('이름 / 주소', 
-        style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
-    subtitle: new Text('리뷰'),
-    leading: new Icon(
-      Icons.restaurant,
-      color: Colors.blue[500],
-    ),
-  ),
-  new Divider(),
-  new ListTile(
-    title: new Text('이름 / 주소',
-        style: new TextStyle(fontWeight: FontWeight.w500, fontSize: 20.0)),
-    subtitle: new Text('리뷰',),
-    leading: new Icon(
-      Icons.restaurant,
-      color: Colors.blue[500],
-    ),
-),
-
-];
-
-void main() {
-  runApp(new restaurant());
 }

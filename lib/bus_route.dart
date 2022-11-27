@@ -45,10 +45,9 @@ class _MyAppState extends State<bus_route> {
                 ),
                 ElevatedButton(                     // 검색 버튼 생성
                   onPressed: () {},
-                  child: Text('번호 검색'),
+                  child: Text('검색'),
                 ),
               ]),
-
               SizedBox(                             // 지도 생성
                 height: 300,
                 child: NaverMap(
