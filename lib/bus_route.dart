@@ -63,30 +63,30 @@ class _MyAppState extends State<bus_route> {
               ),
               Expanded(
                   child: Container(
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Expanded(
-                            child: Container(
-                              color: Colors.grey[100],
-                              child: ListView(
-                                children: [
-                                  ExerciseTile(icon: Icons.bus_alert_rounded, exerciseName: '190', icon2: Icons.more_horiz),
-                                  ExerciseTile(icon: Icons.bus_alert_rounded, exerciseName: '195', icon2: Icons.more_horiz),
-                                  ExerciseTile(icon: Icons.bus_alert_rounded, exerciseName: '196', icon2: Icons.more_horiz),
-                                  ExerciseTile(icon: Icons.bus_alert_rounded, exerciseName: '57', icon2: Icons.more_horiz),
-                                  ExerciseTile(icon: Icons.bus_alert_rounded, exerciseName: '557', icon2: Icons.more_horiz),
-                                ],
-                              ),
-                            ))
-                      ],
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     ),
-                  ))
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Expanded(
+                     child: Container(
+                       color: Colors.grey[100],
+                      child: ListView(
+                        children: [
+                          ExerciseTile(icon: Icons.bus_alert_rounded, exerciseName: '190', icon2: Icons.more_horiz),
+                          ExerciseTile(icon: Icons.bus_alert_rounded, exerciseName: '195', icon2: Icons.more_horiz),
+                          ExerciseTile(icon: Icons.bus_alert_rounded, exerciseName: '196', icon2: Icons.more_horiz),
+                          ExerciseTile(icon: Icons.bus_alert_rounded, exerciseName: '57', icon2: Icons.more_horiz),
+                          ExerciseTile(icon: Icons.bus_alert_rounded, exerciseName: '557', icon2: Icons.more_horiz),
+                        ],
+                      ),
+                    ))
+                  ],
+                ),
+              ))
             ],
           ),
         ),

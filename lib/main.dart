@@ -15,7 +15,7 @@ import 'dart:io';
 
 void main() {
   HttpOverrides.global = NoCheckCertificateHttpOverrides(); // API 키 권한 받아오기
-  runApp( MyApp());
+  runApp(MyApp());
 } //main에서 MyApp이란 클래스를 호출한다.
 
 class NoCheckCertificateHttpOverrides extends HttpOverrides {
@@ -28,23 +28,25 @@ class NoCheckCertificateHttpOverrides extends HttpOverrides {
 }
 
 
-class MyApp extends StatelessWidget { //MyApp 클래스 선언
+class MyApp extends StatelessWidget {
+  //MyApp 클래스 선언
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        FocusManager.instance.primaryFocus?.unfocus(); // 키보드 닫기 이벤트
-      },
+        onTap: () {
+          FocusManager.instance.primaryFocus?.unfocus(); // 키보드 닫기 이벤트
+        },
 
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false, //오른쪽위 debugBanner 없애기
-        title: 'BUSS',
-        home: MultiProvider(
-          providers: [
-            ChangeNotifierProvider(
-                create: (BuildContext context) => EvProvider()
-            )
-          ],
-          child: MyPage(),
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false, //오른쪽위 debugBanner 없애기
+          title: 'BUSS',
+          home: MultiProvider(
+            providers: [
+              ChangeNotifierProvider(
+                  create: (BuildContext context) => EvProvider()
+              )
+            ],
+            child: MyPage(),
+          ),
         ),
       ),
     );
@@ -57,19 +59,20 @@ class MyPage extends StatefulWidget {
 }
 
 class _MyPageState extends State<MyPage> {
-  int currentIndex =0;
+  int currentIndex = 0;
   final screens = [
     bus_arrival(), // 버스 도착 페이지
     bus_route(), // 버스 노선 페이지
     restaurant(), // 음식점 및 카페 페이지
     setting(), // 설정 페이지
   ];
+
   Widget build(BuildContext context) {
     return Scaffold(
       body: screens[currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
-        onTap: (index) => setState(() =>currentIndex = index),
+        onTap: (index) => setState(() => currentIndex = index),
         //setState를 써야 바뀐다.
         // navigation 기능
         type: BottomNavigationBarType.fixed,
