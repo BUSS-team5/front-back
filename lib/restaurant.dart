@@ -103,7 +103,6 @@ class LandService{
 }
 
 
-CameraPosition? _initialPosition;
 
 // 페이지 호출
 class restaurant extends StatefulWidget {
@@ -114,8 +113,12 @@ class restaurant extends StatefulWidget {
 // 페이지 생성
 class _MyAppState extends State<restaurant> {
   var _buscontroller = TextEditingController(); // controller 연결
+
   Completer<NaverMapController> _controller = Completer(); // 컨트롤러 생성자
+  CameraPosition? _initialPosition;
+  CameraPosition? _AfterPosition;
   MapType _mapType = MapType.Basic; // 지도 타입 = 베이직 타입
+
   late Future myFuture;
   var idx = 0;
 
@@ -135,7 +138,8 @@ class _MyAppState extends State<restaurant> {
       if(i == 0){
         var lat = _list[i].latlng?.latitude ?? 0;
         var lng = _list[i].latlng?.longitude ?? 0;
-        _initialPosition = CameraPosition(target: LatLng(lat, lng));
+        _AfterPosition = CameraPosition(target: LatLng(lat, lng));
+        //print(_initialPosition);
       }
 
       temp.add(Marker(
@@ -156,7 +160,7 @@ class _MyAppState extends State<restaurant> {
       if(i == 0){
         var lat = _cafes[i].latlng?.latitude ?? 0;
         var lng = _cafes[i].latlng?.longitude ?? 0;
-        _initialPosition = CameraPosition(target: LatLng(lat, lng));
+        _AfterPosition = CameraPosition(target: LatLng(lat, lng));
       }
       if(_cafes[i].distance == '100'){
         temp.add(Marker(
@@ -230,8 +234,9 @@ class _MyAppState extends State<restaurant> {
                     );
                   }).toList(),
                   onChanged: (dynamic value) {
-                    setState(() {
+                    setState((){
                       selectedDropdown1 = value;
+                      _goToNewPosition();
                     });
                   },
                 ),
@@ -254,7 +259,7 @@ class _MyAppState extends State<restaurant> {
                           }
                           else{
                             return SizedBox(
-                              height: 500,
+                              height: 550,
                               child: NaverMap(
                                 onMapCreated: onMapCreated,
                                 useSurface: true,
@@ -262,7 +267,7 @@ class _MyAppState extends State<restaurant> {
                                 locationButtonEnable: true,
                                 indoorEnable: true,
                                 initLocationTrackingMode: LocationTrackingMode.NoFollow,
-                                initialCameraPosition: _initialPosition,
+                                initialCameraPosition: CameraPosition(target: LatLng(36.12860209326003,128.33222703225402)),
                                 markers: temp,
                               ),
                             );
@@ -291,7 +296,6 @@ class _MyAppState extends State<restaurant> {
                             setState(() {
                               idx = index!;
                               myFuture = getdata(index, selectedDropdown1);
-
                             });
                           },
                         )
@@ -304,13 +308,14 @@ class _MyAppState extends State<restaurant> {
     );
   }
   
-  void onMapCreated(NaverMapController controller) async {
+  void onMapCreated(NaverMapController controller) {
     if (_controller.isCompleted) _controller = Completer();
-    await controller.moveCamera(CameraUpdate.toCameraPosition(_initialPosition!));
     _controller.complete(controller);
   }
-
-
+  Future<void> _goToNewPosition() async {
+    final NaverMapController controller = await _controller.future;
+    controller.moveCamera(CameraUpdate.toCameraPosition(CameraPosition(target:LatLng(36.14316622520069,128.3942120601902))));
+  }
   void _onMarkerTap(Marker? marker,Map<String,int> iconSize){
    int pos = temp.indexWhere((m) => m.markerId == marker!.markerId);
    setState(() {
