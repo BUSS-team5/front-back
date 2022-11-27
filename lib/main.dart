@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:test_project/model/provider.dart';
-import 'dart:async';
-import 'package:naver_map_plugin/naver_map_plugin.dart';
-
 import 'package:provider/provider.dart';
 
 import 'bus_arrival.dart';
@@ -48,8 +45,7 @@ class MyApp extends StatelessWidget {
             child: MyPage(),
           ),
         ),
-      ),
-    );
+      );
   }
 }
 
