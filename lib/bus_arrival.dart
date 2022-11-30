@@ -7,9 +7,12 @@ class bus_arrival extends StatefulWidget {
 }
 
 class _MyAppState extends State<bus_arrival> {
-  Future<void> _onRefresh() => Future.delayed(Duration(seconds: 1), () {
-    return Future<void>.value();
-  });
+  Future<void> _onRefresh() async{
+    await Future.delayed(Duration(milliseconds: 1000));
+    setState(() {
+
+    });
+  }
 
 
   Widget build(BuildContext context) {
