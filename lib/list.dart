@@ -53,6 +53,14 @@ class ListWidget extends StatelessWidget {
         }
       }
     }
+    if(temp.length == 0){
+      Map<String, dynamic> prt = {
+        "arrtime": '0',
+        "routeno": "도착정보가 없습니다.",
+        "routeid": "0"
+      };
+      temp.add(Ev.fromJson(prt));
+    }
     temp.sort((a, b) => a.arrtime!.compareTo(b.arrtime!));
 
     return ListView.separated(
