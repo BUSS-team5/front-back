@@ -110,13 +110,14 @@ class restaurant extends StatefulWidget {
   _MyAppState createState() => _MyAppState();
 }
 
+CameraPosition? _AfterPosition;
+
 // 페이지 생성
 class _MyAppState extends State<restaurant> {
   var _buscontroller = TextEditingController(); // controller 연결
 
   Completer<NaverMapController> _controller = Completer(); // 컨트롤러 생성자
   CameraPosition? _initialPosition;
-  CameraPosition? _AfterPosition;
   MapType _mapType = MapType.Basic; // 지도 타입 = 베이직 타입
 
   late Future myFuture;
@@ -147,6 +148,7 @@ class _MyAppState extends State<restaurant> {
         position: LatLng(_list[i].latlng!.latitude, _list[i].latlng!.longitude),
         captionText: "${_list[i].b}/${_list[i].a}",
       ));
+      print("${_list[i].latlng!.latitude}, ${_list[i].latlng!.longitude}");
     }
     return _list[0].latlng;
   }
@@ -198,6 +200,7 @@ class _MyAppState extends State<restaurant> {
     if(cnt == 2){
       await getland(route);
     }
+    _goToNewPosition();
     return temp.length;
   }
 
@@ -236,7 +239,7 @@ class _MyAppState extends State<restaurant> {
                   onChanged: (dynamic value) {
                     setState((){
                       selectedDropdown1 = value;
-                      _goToNewPosition();
+                      // _goToNewPosition();
                     });
                   },
                 ),
@@ -314,7 +317,7 @@ class _MyAppState extends State<restaurant> {
   }
   Future<void> _goToNewPosition() async {
     final NaverMapController controller = await _controller.future;
-    controller.moveCamera(CameraUpdate.toCameraPosition(CameraPosition(target:LatLng(36.14316622520069,128.3942120601902))));
+    controller.moveCamera(CameraUpdate.toCameraPosition(_AfterPosition!));
   }
   void _onMarkerTap(Marker? marker,Map<String,int> iconSize){
    int pos = temp.indexWhere((m) => m.markerId == marker!.markerId);
