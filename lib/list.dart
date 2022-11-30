@@ -37,17 +37,18 @@ class ListWidget extends StatelessWidget {
   // 리스트 뷰
   Widget _makeListView(List<Ev> evs) { // 버스 리스트 만들기
     var node = new List<String>.empty(growable: true);
+    evs.sort((a, b) => a.arrtime!.compareTo(b.arrtime!));
     if(end == 1){
-      node.addAll(["191", "193", "51-1", "190-3", "891-2", "57", "190", "192", "195", "900", "196"]);
+      node.addAll(["GMB19120", "GMB19320", "GMB51-120", "GMB190-320", "GMB193-220", "GMB891-220", "GMB5720", "GMB5721", "GMB19020", "GMB19220", "GMB19520", "GMB90020", "GMB19620"]);
     }
     else if(end == 2){
-      node.addAll(["193", "190", "191", "195", "190-1", "196", "95-2", "97", "190-2", "404-1", "900", "193-2"]);
+      node.addAll(["GMB19310", "GMB19010", "GMB19110", "GMB19510", "GMB40431", "GMB190-110", "GMB19610", "GMB95-210", "GMB95-211", "GMB9710", "GMB190-210", "GMB404-130", "GMB90010", "GMB193-210"]);
     }
     var temp = new List<Ev>.empty(growable: true);
 
-    for(int i  = 1; i < evs.length; i++){
-      for(int j = 1; j < node.length; j++){
-        if(evs[i].bussnum == node[j] && temp.length < 3){
+    for(int i  = 0; i < evs.length; i++){
+      for(int j = 0; j < node.length; j++){
+        if(evs[i].busid == node[j] && temp.length < 3){
           temp.add(evs[i]);
         }
       }
