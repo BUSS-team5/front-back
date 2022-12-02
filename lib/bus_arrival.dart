@@ -14,7 +14,6 @@ class _MyAppState extends State<bus_arrival> {
     });
   }
 
-
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(

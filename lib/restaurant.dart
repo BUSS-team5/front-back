@@ -126,7 +126,7 @@ class _MyAppState extends State<restaurant> {
   List<Marker> temp = [];
 
   List<String> dropdownList1 = ['구미역', '금오공대종점','롯데마트','삼구아파트',
-                              '신평시장','엘지연수원','오성예식장앞','옥계중학교'];
+                              '신평시장','비산벽산아파트','오성예식장앞','옥계중학교'];
   String selectedDropdown1 = '구미역';
 
 
@@ -169,6 +169,7 @@ class _MyAppState extends State<restaurant> {
           markerId: _cafes[i].name!,
           position: LatLng(_cafes[i].latlng!.latitude, _cafes[i].latlng!.longitude),
           captionText: _cafes[i].name!,
+          //iconTintColor: Color.fromARGB(a, r, g, b)
         ));
       }
       if(_cafes[i].distance == '300'){
@@ -176,6 +177,7 @@ class _MyAppState extends State<restaurant> {
           markerId: _cafes[i].name!,
           position: LatLng(_cafes[i].latlng!.latitude, _cafes[i].latlng!.longitude),
           captionText: _cafes[i].name!,
+          //iconTintColor: Color.fromARGB(a, r, g, b)
          // onMarkerTab: _onMarkerTap(),
         ));
       }
@@ -184,6 +186,7 @@ class _MyAppState extends State<restaurant> {
           markerId: _cafes[i].name!,
           position: LatLng(_cafes[i].latlng!.latitude, _cafes[i].latlng!.longitude),
           captionText: _cafes[i].name!,
+          //iconTintColor: Color.fromARGB(a, r, g, b)
         ));
       }
     }
