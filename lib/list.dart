@@ -15,23 +15,50 @@ class ListWidget extends StatelessWidget {
     return Column(
       children: [
         Expanded(
-            child: Column(
-              children: [
-                // 버스 번호
-                Text(
-                  ev.bussnum.toString()+" 번",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-                ),
-                // 남은 시간(분)
-                Text(
-                  buf.toString()+"분 남았습니다.",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
-                ),
-              ],
-            ),
+          child: EvFilter(ev),
         )
       ],
     );
+  }
+
+  Widget EvFilter(Ev ev){
+    if (ev.bussnum == "0"){
+      return Column(
+        children: [
+          Text(
+            "버스정보가 없습니다.",
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+          ),
+        ],
+      );
+    }
+
+    else{
+      var arrtemp = ev.arrtime! / 60;
+      var buf = arrtemp.toInt();
+      return Column(
+        children: [
+          Expanded(
+            child: Container(
+              width: 360,
+              height: 230,
+              color: Colors.grey,
+              child: Align(
+                alignment: Alignment.center,
+                child: Text(
+                  ev.bussnum.toString() + " 번",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                ),
+              ),
+            ),
+          ),
+          Text(
+            buf.toString() + "분 남았습니다.",
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+          ),
+        ],
+      );
+    }
   }
 
   // 리스트 뷰
@@ -56,7 +83,7 @@ class ListWidget extends StatelessWidget {
     if(temp.length == 0){
       Map<String, dynamic> prt = {
         "arrtime": '0',
-        "routeno": "도착정보가 없습니다.",
+        "routeno": "0",
         "routeid": "0"
       };
       temp.add(Ev.fromJson(prt));
@@ -91,7 +118,7 @@ class ListWidget extends StatelessWidget {
           return Column(
             children: <Widget>[
               SizedBox(
-                  child: _makeListView(provider.evs),
+                child: _makeListView(provider.evs),
               ),
             ],
           );

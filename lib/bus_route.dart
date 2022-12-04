@@ -1,94 +1,112 @@
-import 'package:flutter/material.dart'; //flutter의 package를 가져오는 코드 반드시 필요
-import 'model/exercise_tile.dart';
-import 'package:async/async.dart';
-import 'package:cupertino_icons/cupertino_icons.dart';
-// 페이지 호출
+// main.dart
+import 'package:flutter/material.dart';
+
 class bus_route extends StatefulWidget {
+  const bus_route({Key? key}) : super(key: key);
+
   @override
   _MyAppState createState() => _MyAppState();
 }
 
-// 페이지 생성
 class _MyAppState extends State<bus_route> {
-  var _buscontroller = TextEditingController();
+
+  final List<Map<String, dynamic>> _allUsers = [
+    {"id": "190", "HotPlace": "금오공대종점,비산벽산아파트,구미역",},
+    {"id": "191", "HotPlace": "Aragon",},
+    {"id": "192", "HotPlace": "Bob",},
+    {"id": "193", "HotPlace": "Barbara",},
+    {"id": "195", "HotPlace": "Candy",},
+    {"id": "196", "HotPlace": "Colin",},
+    {"id": "900", "HotPlace": "Audra",},
+    {"id": "57",  "HotPlace": "Banana",},
+    {"id": "557", "HotPlace": "Caversky",},
+    {"id": "891-2","HotPlace": "Becky",},
+  ];
+
+  // This list holds the data for the list view
+  List<Map<String, dynamic>> _foundUsers = [];
+  @override
+  initState() {
+
+    _foundUsers = _allUsers;
+    super.initState();
+  }
+
+  // This function is called whenever the text field changes
+  void _runFilter(String enteredKeyword) {
+    List<Map<String, dynamic>> results = [];
+    if (enteredKeyword.isEmpty) {
+      // if the search field is empty or only contains white-space, we'll display all users
+      results = _allUsers;
+    } else {
+      results = _allUsers
+          .where((user) =>
+          user["id"].toLowerCase().contains(enteredKeyword.toLowerCase()))
+          .toList();
+      // we use the toLowerCase() method to make it case-insensitive
+    }
+    setState(() {
+      _foundUsers = results;
+    });
+
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue[800],
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    '버스 노선 정보',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
+      appBar: AppBar(
+        title: const Text('버스별 핫플 검색'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 20,
+            ),
+            TextField(
+              onChanged: (value){
+                setState(() {
+                  _runFilter(value);
+                });
+              },
+              decoration: const InputDecoration(
+                  labelText: '검색', suffixIcon: Icon(Icons.search)),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Expanded(
+              child: _foundUsers.isNotEmpty
+                  ? ListView.builder(
+                itemCount: _foundUsers.length,
+                itemBuilder: (context, index) => Card(
+                  key: ValueKey(_foundUsers[index]["id"]),
+                  color: Colors.blue,
+                  elevation: 4,
+                  margin: const EdgeInsets.symmetric(vertical: 10),
+                  child: ListTile(
+                    leading: Text(
+                      _foundUsers[index]["id"].toString(),
+                      style: const TextStyle(fontSize: 24, color:Colors.white),
                     ),
+                    title: Text('추천HotPlace!', style:TextStyle(
+                        color:Colors.white
+                    )),
+                    subtitle: Text(
+                        '${_foundUsers[index]['HotPlace']}',style:TextStyle(
+                        color:Colors.white
+                    )),
+                    onTap: (){},
                   ),
-                ],
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.blue[600],
-                  borderRadius: BorderRadius.circular(20),
                 ),
-                padding: EdgeInsets.all(12),
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.search,
-                      color: Colors.white,
-                    ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Expanded(child:
-                    TextField(
-                      controller: _buscontroller,
-                      decoration: InputDecoration(
-                        hintText: '노선 검색',
-                      ),
-                    ),
-                    ),
-                  ],
-                ),
+              )
+                  : const Text(
+                'No results found',
+                style: TextStyle(fontSize: 24),
               ),
-              Expanded(
-                  child: Container(
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Expanded(
-                     child: Container(
-                       color: Colors.grey[100],
-                      child: ListView(
-                        children: [
-                          ExerciseTile(icon: Icons.bus_alert_rounded, exerciseName: '190', icon2: Icons.more_horiz),
-                          ExerciseTile(icon: Icons.bus_alert_rounded, exerciseName: '195', icon2: Icons.more_horiz),
-                          ExerciseTile(icon: Icons.bus_alert_rounded, exerciseName: '196', icon2: Icons.more_horiz),
-                          ExerciseTile(icon: Icons.bus_alert_rounded, exerciseName: '57', icon2: Icons.more_horiz),
-                          ExerciseTile(icon: Icons.bus_alert_rounded, exerciseName: '557', icon2: Icons.more_horiz),
-                        ],
-                      ),
-                    ))
-                  ],
-                ),
-              ))
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

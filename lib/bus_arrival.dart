@@ -7,59 +7,59 @@ class bus_arrival extends StatefulWidget {
 }
 
 class _MyAppState extends State<bus_arrival> {
-  Future<void> _onRefresh() async{
-    await Future.delayed(Duration(milliseconds: 1000));
-    setState(() {
-
-    });
-  }
+  Future<void> _onRefresh() => Future.delayed(Duration(seconds: 1), () {
+    return Future<void>.value();
+  });
 
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('버스 도착 정보'
-          ),
-          centerTitle: true, // 중앙 정렬
-          elevation: 0.0,
-        ),
+        backgroundColor: Colors.grey[800], // 배경 색상
         body: RefreshIndicator(
             onRefresh: _onRefresh,
             child: Padding(
-                padding: EdgeInsets.fromLTRB(20, 40, 20, 0),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                padding: EdgeInsets.fromLTRB(30, 50, 30, 0),
+                child: Column(children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.train_outlined),
-                      Text('학교 --> 역',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold,
-                          )),
-                      SizedBox(
-                        child: ListWidget(
-                          end: 1,
+                      Text(
+                        '실시간 버스 도착 정보',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                      Container(
-                        margin: const EdgeInsets.fromLTRB(0, 40, 0, 0),
-                        child: Icon(Icons.add_business_outlined),
-                      ),
-                      Text('학교 --> 옥계',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold,
-                          )),
-                      SizedBox(
-                        child: ListWidget(
-                          end: 2,
-                        ),
-                      ),
-                    ]
-                )
-            )
-        )
-    );
+                    ],
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
+                  ),
+                  Text('금오공대  ➪ 구미역',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold,
+                      )),
+                  Container(
+                    child: ListWidget(
+                      end: 2,
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.fromLTRB(0, 40, 0, 0),
+                    child: Text('금오공대  ➪ 옥계동',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
+                        )),
+                  ),
+                  SizedBox(
+                    child: ListWidget(
+                      end: 2,
+                    ),
+                  ),
+                ]))));
   }
 }

@@ -5,7 +5,6 @@ import 'package:toggle_switch/toggle_switch.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';  // **파이어베이스 연동하기
 
 class Cafe{
-  int? review;
   String? name;
   String? distance;
   String? holiday;
@@ -13,7 +12,7 @@ class Cafe{
   GeoPoint? latlng;
   String? address;
 
-  Cafe({this.review, this.name, this.distance, this.holiday, this.number, this.latlng, this.address});
+  Cafe({this.name, this.distance, this.holiday, this.number, this.latlng, this.address});
 
   Cafe.fromJson(Map<String, dynamic>? json){
     var temp;
@@ -22,7 +21,6 @@ class Cafe{
       temp = int.tryParse(json?["review"] ?? "");
     }
 
-    review = temp ?? 0;
     name = json?['name'] ?? "";
     distance = json?['distance'] ?? "";
     holiday = json?['holiday'] ?? "";
@@ -68,13 +66,15 @@ class CafeService{
 class Land{
   int? a;
   int? b;
+  String? name;
   GeoPoint? latlng;
 
-  Land({this.a, this.b, thislatlng});
+  Land({this.a, this.b, this.name, this.latlng});
 
   Land.fromJson(Map<String, dynamic>? json){
     a = json?['보증금'] ?? 0;
     b = json?['월세'] ?? 0;
+    name = json?['name'] ?? "";
     latlng = json?['주소'] ?? GeoPoint(0, 0);
   }
 
@@ -102,7 +102,16 @@ class LandService{
   }
 }
 
-
+Map CameraLatlng = {
+  '구미역': CameraPosition(target: LatLng(36.1286246175125, 128.33222741295975)),
+  '금오공대종점': CameraPosition(target: LatLng(36.13929449, 128.3971135)),
+  '롯데마트': CameraPosition(target: LatLng(36.11334734, 128.3640135)),
+  '삼구아파트': CameraPosition(target: LatLng(36.13846753, 128.4207092)),
+  '신평시장': CameraPosition(target: LatLng(36.12302785, 128.3634936)),
+  '비산벽산아파트': CameraPosition(target: LatLng(36.11976207, 128.3796102)),
+  '오성예식장앞': CameraPosition(target: LatLng(36.12119339, 128.351442)),
+  '옥계중학교': CameraPosition(target: LatLng(36.13701578, 128.4119213))
+};
 
 // 페이지 호출
 class restaurant extends StatefulWidget {
@@ -126,7 +135,7 @@ class _MyAppState extends State<restaurant> {
   List<Marker> temp = [];
 
   List<String> dropdownList1 = ['구미역', '금오공대종점','롯데마트','삼구아파트',
-                              '신평시장','비산벽산아파트','오성예식장앞','옥계중학교'];
+    '신평시장','비산벽산아파트','오성예식장앞','옥계중학교'];
   String selectedDropdown1 = '구미역';
 
 
@@ -139,14 +148,13 @@ class _MyAppState extends State<restaurant> {
       if(i == 0){
         var lat = _list[i].latlng?.latitude ?? 0;
         var lng = _list[i].latlng?.longitude ?? 0;
-        _AfterPosition = CameraPosition(target: LatLng(lat, lng));
-        //print(_initialPosition);
+        _AfterPosition = CameraLatlng['${route}'];
       }
 
       temp.add(Marker(
-        markerId: i.toString(),
-        position: LatLng(_list[i].latlng!.latitude, _list[i].latlng!.longitude),
-        captionText: "${_list[i].b}/${_list[i].a}",
+          markerId: i.toString(),
+          position: LatLng(_list[i].latlng!.latitude, _list[i].latlng!.longitude),
+          infoWindow: "${_list[i].name}\n${_list[i].b} / ${_list[i].a}"
       ));
       print("${_list[i].latlng!.latitude}, ${_list[i].latlng!.longitude}");
     }
@@ -162,31 +170,27 @@ class _MyAppState extends State<restaurant> {
       if(i == 0){
         var lat = _cafes[i].latlng?.latitude ?? 0;
         var lng = _cafes[i].latlng?.longitude ?? 0;
-        _AfterPosition = CameraPosition(target: LatLng(lat, lng));
+        _AfterPosition = CameraLatlng['${route}'];
       }
       if(_cafes[i].distance == '100'){
         temp.add(Marker(
           markerId: _cafes[i].name!,
           position: LatLng(_cafes[i].latlng!.latitude, _cafes[i].latlng!.longitude),
-          captionText: _cafes[i].name!,
-          //iconTintColor: Color.fromARGB(a, r, g, b)
+          infoWindow: "가게명: ${_cafes[i].name}\n전화번호: ${_cafes[i].number}\n주소: ${_cafes[i].address}",
         ));
       }
       if(_cafes[i].distance == '300'){
         temp.add(Marker(
           markerId: _cafes[i].name!,
           position: LatLng(_cafes[i].latlng!.latitude, _cafes[i].latlng!.longitude),
-          captionText: _cafes[i].name!,
-          //iconTintColor: Color.fromARGB(a, r, g, b)
-         // onMarkerTab: _onMarkerTap(),
+          infoWindow: "가게명: ${_cafes[i].name}\n전화번호: ${_cafes[i].number}\n주소: ${_cafes[i].address}",
         ));
       }
       if(_cafes[i].distance == '500'){
         temp.add(Marker(
           markerId: _cafes[i].name!,
           position: LatLng(_cafes[i].latlng!.latitude, _cafes[i].latlng!.longitude),
-          captionText: _cafes[i].name!,
-          //iconTintColor: Color.fromARGB(a, r, g, b)
+          infoWindow: "가게명: ${_cafes[i].name}\n전화번호: ${_cafes[i].number}\n주소: ${_cafes[i].address}",
         ));
       }
     }
@@ -221,35 +225,57 @@ class _MyAppState extends State<restaurant> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-            title: Text('생활 지도'),
-            centerTitle: true, elevation: 0.0
-        ),
+        backgroundColor: Colors.grey[800],
         body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
-          child: Column(
-            children: <Widget>[
-              Row(children: <Widget>[
-                // 검색 위젯
-                DropdownButton(
-                  value: selectedDropdown1,
-                  items: dropdownList1.map((String item) {
-                    return DropdownMenuItem<String>(
-                      child: Text('$item'),
-                      value: item,
-                    );
-                  }).toList(),
-                  onChanged: (dynamic value) {
-                    setState((){
-                      selectedDropdown1 = value;
-                      // _goToNewPosition();
-                    });
-                  },
-                ),
-              ]),
-              Stack(
-                  children: <Widget> [
-                    FutureBuilder(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(10,20,10,10),
+            child: Column(
+              children: <Widget>[
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Container(
+                        padding: EdgeInsets.fromLTRB(0, 40, 0, 10),
+                        child: Text(
+                          '생활 지도',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                  // 검색 위젯
+                  Container(
+                    padding: EdgeInsets.fromLTRB(0, 40, 0, 10),
+                    child: DropdownButton(
+                      dropdownColor: Colors.grey[800],
+                      value: selectedDropdown1,
+                      items: dropdownList1.map((String item) {
+                        return DropdownMenuItem<String>(
+                          child: Text(
+                              '$item',
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                          value: item,
+                        );
+                      }).toList(),
+                      onChanged: (dynamic value) {
+                        setState((){
+                          selectedDropdown1 = value;
+                          myFuture = getdata(idx, selectedDropdown1);
+                          // _goToNewPosition();
+                        });
+                      },
+                    ),
+                  ),
+                ]),
+                Stack(
+                    children: <Widget> [
+                      FutureBuilder(
                         future: myFuture,
                         builder: (BuildContext context, AsyncSnapshot snapshot){
                           if(snapshot.hasData == false){
@@ -257,15 +283,15 @@ class _MyAppState extends State<restaurant> {
                           }
                           else if(snapshot.hasError){
                             return Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
                                   'Error: ${snapshot.error}'
-                                ),
+                              ),
                             );
                           }
                           else{
                             return SizedBox(
-                              height: 550,
+                              height: 600,
                               child: NaverMap(
                                 onMapCreated: onMapCreated,
                                 useSurface: true,
@@ -279,41 +305,42 @@ class _MyAppState extends State<restaurant> {
                             );
                           }
                         },
-                    ),
-                    Container(
-                        padding:EdgeInsets.all(20),
-                        child: ToggleSwitch(
-                          minWidth: 60.0,
-                          minHeight: 40.0,
-                          initialLabelIndex: idx,
-                          cornerRadius:20.0,
-                          activeFgColor: Colors.white,
-                          inactiveBgColor: Colors.grey,
-                          inactiveFgColor: Colors.white,
-                          totalSwitches: 3,
-                          icons: [
-                            Icons.restaurant,
-                            Icons.coffee,
-                            Icons.house,
-                          ],
-                          iconSize: 20.0,
-                          activeBgColor: [Colors.blue],
-                          onToggle: (index){
-                            setState(() {
-                              idx = index!;
-                              myFuture = getdata(index, selectedDropdown1);
-                            });
-                          },
-                        )
-                    )
-                  ]
-              ),
-            ],
+                      ),
+                      Container(
+                          padding:EdgeInsets.all(20),
+                          child: ToggleSwitch(
+                            minWidth: 60.0,
+                            minHeight: 40.0,
+                            initialLabelIndex: idx,
+                            cornerRadius:20.0,
+                            activeFgColor: Colors.white,
+                            inactiveBgColor: Colors.grey,
+                            inactiveFgColor: Colors.white,
+                            totalSwitches: 3,
+                            icons: [
+                              Icons.restaurant,
+                              Icons.coffee,
+                              Icons.house,
+                            ],
+                            iconSize: 20.0,
+                            activeBgColor: [Colors.blue],
+                            onToggle: (index){
+                              setState(() {
+                                idx = index!;
+                                myFuture = getdata(index, selectedDropdown1);
+                              });
+                            },
+                          )
+                      )
+                    ]
+                ),
+              ],
+            ),
           ),
         )
     );
   }
-  
+
   void onMapCreated(NaverMapController controller) {
     if (_controller.isCompleted) _controller = Completer();
     _controller.complete(controller);
@@ -323,9 +350,8 @@ class _MyAppState extends State<restaurant> {
     controller.moveCamera(CameraUpdate.toCameraPosition(_AfterPosition!));
   }
   void _onMarkerTap(Marker? marker,Map<String,int> iconSize){
-   int pos = temp.indexWhere((m) => m.markerId == marker!.markerId);
-   setState(() {
-     temp[pos].captionText = "선택됨";
-   });
+    // int pos = temp.indexWhere((m) => m.markerId == marker!.markerId);
+    setState(() {
+    });
   }
 }
