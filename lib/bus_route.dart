@@ -94,6 +94,9 @@ class _HomePageState extends State<HomePage> {
                 fontWeight: FontWeight.bold,
               ),
             ),
+            SizedBox(
+              height: 20,
+            ),
             TextField(
               onChanged: (value){
                 setState(() {

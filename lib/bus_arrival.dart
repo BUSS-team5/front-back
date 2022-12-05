@@ -57,6 +57,9 @@ class _MyAppState extends State<bus_arrival> {
                       ),
                     ],
                   ),
+                  SizedBox(
+                    height: 20,
+                  ),
                   DropdownButton(
                     dropdownColor: Colors.grey[800],
                     value: selectedDropdown1,
