@@ -27,12 +27,12 @@ class ListWidget extends StatelessWidget {
         children: [
           Container(
             color: Colors.grey,
-            height: 40,
+            height: 80,
             child: Align(
               alignment: Alignment.center,
               child: Text(
                 "버스정보가 없습니다.",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
               ),
             ),
           ),
@@ -47,19 +47,26 @@ class ListWidget extends StatelessWidget {
         children: [
           Expanded(
             child: Container(
+              height: 45,
               color: Colors.grey,
               child: Align(
                 alignment: Alignment.center,
                 child: Text(
                   ev.bussnum.toString() + " 번",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
                 ),
               ),
             ),
           ),
-          Text(
-            buf.toString() + "분 남았습니다.",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+          Container(
+            height: 35,
+            child: Align(
+              alignment: Alignment.center,
+              child: Text(
+                buf.toString() + "분 남았습니다.",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              ),
+            ),
           ),
         ],
       );

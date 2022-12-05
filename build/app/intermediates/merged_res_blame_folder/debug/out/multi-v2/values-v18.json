@@ -4,7 +4,7 @@
             "outputFile": "C:\\Users\\kst10\\StudioProjects\\front-back\\build\\app\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v18\\values-v18.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\kst10\\.gradle\\caches\\transforms-3\\e0f3681119c9d3eda0253a1be73965ba\\transformed\\appcompat-1.0.0\\res\\values-v18\\values-v18.xml",
+                    "source": "C:\\Users\\kst10\\.gradle\\caches\\transforms-3\\9b2c219256663092dd4ca6141452db90\\transformed\\appcompat-1.0.0\\res\\values-v18\\values-v18.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
