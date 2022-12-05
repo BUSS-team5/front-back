@@ -32,7 +32,7 @@ class ListWidget extends StatelessWidget {
               alignment: Alignment.center,
               child: Text(
                 "버스정보가 없습니다.",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),
             ),
           ),
@@ -52,14 +52,14 @@ class ListWidget extends StatelessWidget {
                 alignment: Alignment.center,
                 child: Text(
                   ev.bussnum.toString() + " 번",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                 ),
               ),
             ),
           ),
           Text(
             buf.toString() + "분 남았습니다.",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
           ),
         ],
       );
@@ -110,7 +110,7 @@ class ListWidget extends StatelessWidget {
     return ListView.separated(
       itemCount: temp.length,
       itemBuilder: (BuildContext context, int index) {
-        return Container(height: 40, color: Colors.white, child: _makeEvOne(temp[index]));
+        return Container(height: 80, color: Colors.white, child: _makeEvOne(temp[index]));
       },
       separatorBuilder: (BuildContext context, int index) {
         return Divider();
