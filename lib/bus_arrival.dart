@@ -7,9 +7,34 @@ class bus_arrival extends StatefulWidget {
 }
 
 class _MyAppState extends State<bus_arrival> {
-  Future<void> _onRefresh() => Future.delayed(Duration(seconds: 1), () {
-    return Future<void>.value();
-  });
+  String buffer = '금오공대 ➪ 구미역';
+  int idx = 1;
+  List<String> dropdownList1 = [
+    '금오공대 ➪ 구미역',
+    '구미역 ➪ 금오공대',
+    '금오공대 ➪ 옥계동(삼구아파트)',
+    '옥계동(삼구아파트) ➪ 금오공대',
+    '금오공대 ➪ 종합버스터미널',
+    '종합버스터미널(오성예식장) ➪ 금오공대',
+  ];
+  String selectedDropdown1 = '금오공대 ➪ 구미역';
+  Map _end_filter = {
+    '금오공대 ➪ 구미역' : 1,
+    '금오공대 ➪ 옥계동(삼구아파트)' : 2,
+    '금오공대 ➪ 종합버스터미널' : 3,
+    '구미역 ➪ 금오공대' : 4,
+    '옥계동(삼구아파트) ➪ 금오공대' : 5,
+    '종합버스터미널(오성예식장) ➪ 금오공대' : 6,
+  };
+
+  Future<void> _onRefresh() async {
+    await Future.delayed(Duration(seconds: 1));
+    setState(() {
+      buffer = selectedDropdown1;
+      idx = _end_filter['${selectedDropdown1}'];
+    });
+    return null;
+  }
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,10 +57,29 @@ class _MyAppState extends State<bus_arrival> {
                       ),
                     ],
                   ),
+                  DropdownButton(
+                    dropdownColor: Colors.grey[800],
+                    value: selectedDropdown1,
+                    items: dropdownList1.map((String item) {
+                      return DropdownMenuItem<String>(
+                        child: Text('$item',
+                          style: TextStyle(fontSize: 15, color: Colors.white),),
+                        value: item,
+                      );
+                    }).toList(),
+                    onChanged: (dynamic value) {
+                      setState(() {
+                        selectedDropdown1 = value;
+                        buffer = selectedDropdown1;
+                        idx = _end_filter['${selectedDropdown1}'];
+                      });
+                    },
+                  ),
+
                   Padding(
                     padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
                   ),
-                  Text('금오공대  ➪ 구미역',
+                  Text('${buffer}',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 20.0,
@@ -43,21 +87,7 @@ class _MyAppState extends State<bus_arrival> {
                       )),
                   Container(
                     child: ListWidget(
-                      end: 2,
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.fromLTRB(0, 40, 0, 0),
-                    child: Text('금오공대  ➪ 옥계동',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold,
-                        )),
-                  ),
-                  SizedBox(
-                    child: ListWidget(
-                      end: 2,
+                      end: idx, // 학 - 역
                     ),
                   ),
                 ]))));

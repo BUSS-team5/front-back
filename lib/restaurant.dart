@@ -156,7 +156,7 @@ class _MyAppState extends State<restaurant> {
           position: LatLng(_list[i].latlng!.latitude, _list[i].latlng!.longitude),
           infoWindow: "${_list[i].name}\n${_list[i].b} / ${_list[i].a}"
       ));
-      print("${_list[i].latlng!.latitude}, ${_list[i].latlng!.longitude}");
+      // print("${_list[i].latlng!.latitude}, ${_list[i].latlng!.longitude}");
     }
     return _list[0].latlng;
   }
@@ -177,6 +177,7 @@ class _MyAppState extends State<restaurant> {
           markerId: _cafes[i].name!,
           position: LatLng(_cafes[i].latlng!.latitude, _cafes[i].latlng!.longitude),
           infoWindow: "가게명: ${_cafes[i].name}\n전화번호: ${_cafes[i].number}\n주소: ${_cafes[i].address}",
+          iconTintColor: Color.fromARGB(255, 255, 0, 0),
         ));
       }
       if(_cafes[i].distance == '300'){
@@ -184,6 +185,7 @@ class _MyAppState extends State<restaurant> {
           markerId: _cafes[i].name!,
           position: LatLng(_cafes[i].latlng!.latitude, _cafes[i].latlng!.longitude),
           infoWindow: "가게명: ${_cafes[i].name}\n전화번호: ${_cafes[i].number}\n주소: ${_cafes[i].address}",
+          iconTintColor: Color.fromARGB(255, 0, 255, 0),
         ));
       }
       if(_cafes[i].distance == '500'){
@@ -191,6 +193,7 @@ class _MyAppState extends State<restaurant> {
           markerId: _cafes[i].name!,
           position: LatLng(_cafes[i].latlng!.latitude, _cafes[i].latlng!.longitude),
           infoWindow: "가게명: ${_cafes[i].name}\n전화번호: ${_cafes[i].number}\n주소: ${_cafes[i].address}",
+          iconTintColor: Color.fromARGB(255, 0, 0, 255),
         ));
       }
     }
@@ -226,8 +229,7 @@ class _MyAppState extends State<restaurant> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.grey[800],
-        body: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
+        body: Container(
           child: Padding(
             padding: const EdgeInsets.fromLTRB(10,20,10,10),
             child: Column(
@@ -291,7 +293,7 @@ class _MyAppState extends State<restaurant> {
                           }
                           else{
                             return SizedBox(
-                              height: 600,
+                              height: 550,
                               child: NaverMap(
                                 onMapCreated: onMapCreated,
                                 useSurface: true,

@@ -1,26 +1,52 @@
 // main.dart
 import 'package:flutter/material.dart';
 
-class bus_route extends StatefulWidget {
+void main() {
+  runApp(const bus_route());
+}
+
+class bus_route extends StatelessWidget {
   const bus_route({Key? key}) : super(key: key);
 
   @override
-  _MyAppState createState() => _MyAppState();
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: HomePage(),
+    );
+  }
 }
 
-class _MyAppState extends State<bus_route> {
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
 
   final List<Map<String, dynamic>> _allUsers = [
-    {"id": "190", "HotPlace": "금오공대종점,비산벽산아파트,구미역",},
-    {"id": "191", "HotPlace": "Aragon",},
-    {"id": "192", "HotPlace": "Bob",},
-    {"id": "193", "HotPlace": "Barbara",},
-    {"id": "195", "HotPlace": "Candy",},
-    {"id": "196", "HotPlace": "Colin",},
-    {"id": "900", "HotPlace": "Audra",},
-    {"id": "57",  "HotPlace": "Banana",},
-    {"id": "557", "HotPlace": "Caversky",},
-    {"id": "891-2","HotPlace": "Becky",},
+    {"id": "190", "name": "구미역 / 오성예식장앞 / 신평시장 / 비산벽산아파트 / 금오공대종점"},
+    {"id": "190-1", "name": "구미역 / 오성예식장앞 / 신평시장 / 비산벽산아파트 / 삼구아파트  "},
+    {"id": "190-2", "name": "구미역 / 오성예식장앞 / 신평시장 / 비산벽산아파트 / 금오공대종점 / 삼구아파트"},
+    {"id": "190-3", "name": "구미역 / 오성예식장앞 / 신평시장 / 비산벽산아파트 / 금오공대종점"},
+    {"id": "191", "name": "구미역 / 신평시장 / 비산벽산아파트 / 금오공대종점 / 삼구아파트"},
+    {"id": "192", "name": "구미역 / 오성예식장앞 / 금오공대종점 / 옥계중학교 / 롯데마트"},
+    {"id": "193", "name": "구미역 / 오성예식장앞 / 신평시장 / 금오공대종점 / 옥계중학교 / 삼구아파트"},
+    {"id": "193-2", "name": "구미역 / 오성예식장앞 / 신평시장 / 금오공대종점 / 옥계중학교 / 삼구아파트"},
+    {"id": "195", "name": "구미역 / 오성예식장앞 / 금오공대종점 / 옥계중학교 / 삼구아파트 / 롯데마트"},
+    {"id": "196", "name": "구미역 / 오성예식장앞 / 신평시장 / 비산벽산아파트 / 금오공대종점 / 옥계중학교 / 삼구아파트"},
+    {"id": "51-1", "name": "구미역 / 오성예식장앞 / 신평시장 / 비산벽산아파트 / 금오공대종점"},
+    {"id": "5200", "name": "구미역 / 오성예식장앞 / 신평시장 / 금오공대종점"},
+    {"id": "557", "name": "구미역 / 오성예식장앞 / 신평시장 / 비산벽산아파트 / 금오공대종점"},
+    {"id": "57", "name": "구미역 / 오성예식장앞 / 신평시장 / 비산벽산아파트 / 금오공대종점"},
+    {"id": "900", "name": "구미역 / 금오공대종점 / 옥계중학교 / 삼구아파트"},
+    {"id": "404", "name": "금오공대종점 / 옥계중학교 / 삼구아파트"},
+    {"id": "404-1", "name": "금오공대종점 / 옥계중학교 / 삼구아파트"},
+    {"id": "97", "name": "금오공대종점 / 옥계중학교 / 삼구아파트"},
+    {"id": "95-2", "name": "옥계중학교 / 금오공대종점 / 삼구아파트"},
+    {"id": "891-2", "name": "옥계중학교 / 금오공대종점 / 롯데마트 / 구미역"},
   ];
 
   // This list holds the data for the list view
@@ -54,15 +80,19 @@ class _MyAppState extends State<bus_route> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('버스별 핫플 검색'),
-      ),
+      resizeToAvoidBottomInset: false,
+      backgroundColor: Colors.grey[800],
       body: Padding(
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.fromLTRB(20,60,20,20),
         child: Column(
           children: [
-            const SizedBox(
-              height: 20,
+            Text(
+              '핫플레이스 노선 정보',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             TextField(
               onChanged: (value){
@@ -71,10 +101,7 @@ class _MyAppState extends State<bus_route> {
                 });
               },
               decoration: const InputDecoration(
-                  labelText: '검색', suffixIcon: Icon(Icons.search)),
-            ),
-            const SizedBox(
-              height: 20,
+                  labelText: '버스 번호를 입력하세요.', suffixIcon: Icon(Icons.search)),
             ),
             Expanded(
               child: _foundUsers.isNotEmpty
@@ -82,28 +109,25 @@ class _MyAppState extends State<bus_route> {
                 itemCount: _foundUsers.length,
                 itemBuilder: (context, index) => Card(
                   key: ValueKey(_foundUsers[index]["id"]),
-                  color: Colors.blue,
+                  color: Colors.black38,
                   elevation: 4,
                   margin: const EdgeInsets.symmetric(vertical: 10),
                   child: ListTile(
                     leading: Text(
                       _foundUsers[index]["id"].toString(),
-                      style: const TextStyle(fontSize: 24, color:Colors.white),
+                      style: const TextStyle(fontSize: 20, color:Colors.white),
                     ),
-                    title: Text('추천HotPlace!', style:TextStyle(
-                        color:Colors.white
-                    )),
-                    subtitle: Text(
-                        '${_foundUsers[index]['HotPlace']}',style:TextStyle(
-                        color:Colors.white
-                    )),
-                    onTap: (){},
+                    title: Text(_foundUsers[index]['name'],
+                        style:TextStyle(
+                          fontSize: 14,
+                          color:Colors.white,
+                        )),
                   ),
                 ),
               )
                   : const Text(
-                'No results found',
-                style: TextStyle(fontSize: 24),
+                '정보가 없습니다.',
+                style: TextStyle(fontSize: 20),
               ),
             ),
           ],

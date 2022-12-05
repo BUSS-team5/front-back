@@ -25,9 +25,16 @@ class ListWidget extends StatelessWidget {
     if (ev.bussnum == "0"){
       return Column(
         children: [
-          Text(
-            "버스정보가 없습니다.",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+          Container(
+            color: Colors.grey,
+            height: 40,
+            child: Align(
+              alignment: Alignment.center,
+              child: Text(
+                "버스정보가 없습니다.",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+              ),
+            ),
           ),
         ],
       );
@@ -40,8 +47,6 @@ class ListWidget extends StatelessWidget {
         children: [
           Expanded(
             child: Container(
-              width: 360,
-              height: 230,
               color: Colors.grey,
               child: Align(
                 alignment: Alignment.center,
@@ -71,11 +76,23 @@ class ListWidget extends StatelessWidget {
     else if(end == 2){
       node.addAll(["GMB19310", "GMB19010", "GMB19110", "GMB19510", "GMB40431", "GMB190-110", "GMB19610", "GMB95-210", "GMB95-211", "GMB9710", "GMB190-210", "GMB404-130", "GMB90010", "GMB193-210"]);
     }
+    else if(end == 3){
+      node.addAll(["GMB19320", "GMB51-120", "GMB190-320", "GMB193-220", "GMB891-220", "GMB5720", "GMB5721", "GMB19020", "GMB19220", "GMB19520", "GMB90020", "GMB19620"]);
+    }
+    else if(end == 4){
+      node.addAll(["GMB19010","GMB190-110", "GMB190-310", "GMB190-210","GMB19110","GMB19210","GMB19310","GMB193-210","GMB19510","GMB19610","GMB51-110","GMB55710","GMB5710","GMB90010","GMB520010"]);
+    }
+    else if(end == 5){
+      node.addAll(["GMB19020", "GMB19120", "GMB19320", "GMB193-220", "GMB19520", "GMB90020", "GMB19620","GMB9720","GMB40431","GMB404-130"]);
+    }
+    else if(end == 6) {
+      node.addAll(["GMB19010", "GMB190-110", "GMB190-210", "GMB190-310", "GMB19210", "GMB19310", "GMB193-210", "GMB19510", "GMB19610", "GMB51-110", "GMB55710", "GMB5710", "GMB90010", "GMB520010"]);
+    }
     var temp = new List<Ev>.empty(growable: true);
 
     for(int i  = 0; i < evs.length; i++){
       for(int j = 0; j < node.length; j++){
-        if(evs[i].busid == node[j] && temp.length < 3){
+        if(evs[i].busid == node[j] && temp.length < 4){
           temp.add(evs[i]);
         }
       }
@@ -107,8 +124,17 @@ class ListWidget extends StatelessWidget {
     // Provider.of를 통해 데이터를 접근한다. builder만을 업데이트 하기 위해 listen은 false로 한다.
 
     _evProvider = Provider.of<EvProvider>(context, listen: false);
-    if(end == 1 || end == 2){
+    if(end == 1 || end == 2 || end == 3){
       _evProvider.loadEvs("GMB132"); // EvProvider에 loadEvs()의 접근
+    }
+    else if(end == 4) {
+      _evProvider.loadEvs("GMB80");
+    }
+    else if(end == 5){
+      _evProvider.loadEvs("GMB378");
+    }
+    else if(end == 6){
+      _evProvider.loadEvs("GMB92");
     }
 
     return Container(
