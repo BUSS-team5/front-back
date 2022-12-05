@@ -50,7 +50,7 @@ samples, guidance on mobile development, and a full API reference.
 - toggle_switch: ^2.0.1
 
 
-##페이지별 기능
+## 페이지별 기능
 
 bus_arrival
 - 금오공대 <-> 옥계, 터미널, 구미역을 종점으로 하는 버스가 얼마정도의 시간이 남았는지 알려준다.
