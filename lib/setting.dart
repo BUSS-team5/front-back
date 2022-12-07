@@ -88,103 +88,112 @@ class Page1 extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Card(
-              child: Container(
-                  margin: EdgeInsets.all(30),
-                  padding: EdgeInsets.fromLTRB(10, 20, 10, 20),
-                  child: Column(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.fromLTRB(0, 0, 0, 30),
-                        child: Text("버스 도착 정보 페이지",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.blue,
+            SizedBox(
+              width: double.infinity,
+              child: Card(
+                child: Container(
+                    margin: EdgeInsets.all(30),
+                    padding: EdgeInsets.fromLTRB(10, 20, 10, 20),
+                    child: Column(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.fromLTRB(0, 0, 0, 30),
+                          child: Text("버스 도착 정보 페이지",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blue,
+                            ),
                           ),
                         ),
-                      ),
-                      Text(
-                          '주요 정류장을 지나는 버스가 얼마정도의 시간이 남았는지 알려준다.\n\n'
-                              '최대 4개의 버스 노선이 화면에 노출되며 도착 시간이 빠른 순으로 정렬된다.\n\n',
-                          style: TextStyle(
-                            fontSize: 15,
-                            letterSpacing: 1.0,
-                            wordSpacing: 2.0,
-                            height: 1.2,
-                            color: Colors.grey[600],
-                          ))
-                    ],
-                  )
+                        Text(
+                            '주요 정류장을 지나는 버스가 얼마정도의 시간이 남았는지 알려준다.\n\n'
+                                '최대 4개의 버스 노선이 화면에 노출되며 도착 시간이 빠른 순으로 정렬된다.\n\n',
+                            style: TextStyle(
+                              fontSize: 15,
+                              letterSpacing: 1.0,
+                              wordSpacing: 2.0,
+                              height: 1.2,
+                              color: Colors.grey[600],
+                            ))
+                      ],
+                    )
+                ),
               ),
             ),
             SizedBox(
               height: 20,
             ),
-            Card(
-              child: Container(
-                  margin: EdgeInsets.all(30),
-                  padding: EdgeInsets.fromLTRB(10, 20, 10, 20),
-                  child: Column(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.fromLTRB(0, 0, 0, 30),
-                        child: Text("버스별 핫 플레이스 검색 페이지",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.blue,
+            SizedBox(
+              width: double.infinity,
+              child: Card(
+                child: Container(
+                    margin: EdgeInsets.all(30),
+                    padding: EdgeInsets.fromLTRB(10, 20, 10, 20),
+                    child: Column(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.fromLTRB(0, 0, 0, 30),
+                          child: Text("버스별 핫 플레이스 검색 페이지",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blue,
+                            ),
                           ),
                         ),
-                      ),
-                      Text(
-                          '버스 번호 별 거쳐가는 핫플레이스를 알려준다.\n\n'
-                              '기본 화면은 모든 버스 노선의 핫플레이스가 출력된다.\n\n'
-                              '사용자가 버스 노선을 검색하면 \n해당 노선의 핫플레이스를 출력한다.\n\n',
-                          style: TextStyle(
-                            fontSize: 15,
-                            letterSpacing: 1.0,
-                            wordSpacing: 2.0,
-                            height: 1.2,
-                            color: Colors.grey[600],
-                          ))
-                    ],
-                  )
+                        Text(
+                            '버스 번호 별 거쳐가는 핫플레이스를 알려준다.\n\n'
+                                '기본 화면은 모든 버스 노선의 핫플레이스가 출력된다.\n\n'
+                                '사용자가 버스 노선을 검색하면 \n해당 노선의 핫플레이스를 출력한다.\n\n',
+                            style: TextStyle(
+                              fontSize: 15,
+                              letterSpacing: 1.0,
+                              wordSpacing: 2.0,
+                              height: 1.2,
+                              color: Colors.grey[600],
+                            ))
+                      ],
+                    )
+                ),
               ),
             ),
             SizedBox(
               height: 20,
             ),
-            Card(
-              child: Container(
-                  margin: EdgeInsets.all(30),
-                  padding: EdgeInsets.fromLTRB(10, 20, 10, 20),
-                  child: Column(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.fromLTRB(0, 0, 0, 30),
-                        child: Text("생활 지도 페이지",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.blue,
+            SizedBox(
+              width: double.infinity,
+              child: Card(
+                child: Container(
+                    margin: EdgeInsets.all(30),
+                    padding: EdgeInsets.fromLTRB(10, 20, 10, 20),
+                    child: Column(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.fromLTRB(0, 0, 0, 30),
+                          child: Text("생활 지도 페이지",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blue,
+                            ),
                           ),
                         ),
-                      ),
-                      Text(
-                          '버스 정류장 중 유동인구가 많은 정류장 근처의 음식점,카페,부동산 정보를 알려준다.\n\n'
-                              '사용자가 임의로 핫플레이스 선택하고 카페, 음식점, 부동산 정보 선택이 가능하다.\n\n'
-                              '음식점, 카페 마커는 거리에 따라 주황색, 녹색, 파란색으로 출력된다.\n\n'
-                              '초기 화면의 경우 구미역의 음식점 정보에 대한 마커가 화면에 출력된다.\n',
-                          style: TextStyle(
-                            fontSize: 15,
-                            letterSpacing: 1.0,
-                            wordSpacing: 2.0,
-                            height: 1.2,
-                            color: Colors.grey[600],
-                          ))
-                    ],
-                  )
+                        Text(
+                            '버스 정류장 중 유동인구가 많은 정류장 근처의 음식점,카페,부동산 정보를 알려준다.\n\n'
+                                '사용자가 임의로 핫플레이스 선택하고 카페, 음식점, 부동산 정보 선택이 가능하다.\n\n'
+                                '음식점, 카페 마커는 거리에 따라 주황색, 녹색, 파란색으로 출력된다.\n\n'
+                                '초기 화면의 경우 구미역의 음식점 정보에 대한 마커가 화면에 출력된다.\n',
+                            style: TextStyle(
+                              fontSize: 15,
+                              letterSpacing: 1.0,
+                              wordSpacing: 2.0,
+                              height: 1.2,
+                              color: Colors.grey[600],
+                            ))
+                      ],
+                    )
+                ),
               ),
             ),
           ],
@@ -429,44 +438,44 @@ class Page3 extends StatelessWidget {
               color: Colors.white,
             )),
         body: SingleChildScrollView(
-          child: Center(
               child: Container(
                 padding: EdgeInsets.all(10),
                 child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Card(
-                      child: Container(
-                          margin: EdgeInsets.all(30),
-                          padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
-                          child: Column(
-                            children: [
-                              Container(
-                                margin: EdgeInsets.fromLTRB(0, 0, 0, 30),
-                                child: Text("PACKAGE",
+                    SizedBox(
+                      width: double.infinity,
+                      child: Card(
+                        child: Container(
+                            margin: EdgeInsets.all(30),
+                            padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
+                            child: Column(
+                              children: [
+                                Text("PACKAGE",
                                   style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.blue,
                                   ),
                                 ),
-                              ),
-                              Text(
-                                  'package:http/http.dart\n'
-                                      'package:xml2json/xml2json.dart\n'
-                                      'package:naver_map_plugin/naver_map_plugin.dart\n'
-                                      'package:cloud_firestore/cloud_firestore.dart'
-                                      'package:firebase_core/firebase_core.dart\n'
-                                      'firebase_options.dart\n'
-                                      'package:toggle_switch/toggle_switch.dart\n',
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    letterSpacing: 1.0,
-                                    wordSpacing: 2.0,
-                                    height: 1.2,
-                                    color: Colors.grey[600],
-                                  ))
-                            ],
-                          )
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Text(
+                                    'package:http/http.dart\n'
+                                        'package:xml2json/xml2json.dart\n'
+                                        'package:naver_map_plugin/naver_map_plugin.dart\n'
+                                        'package:cloud_firestore/cloud_firestore.dart'
+                                        'package:firebase_core/firebase_core.dart\n'
+                                        'firebase_options.dart\n'
+                                        'package:toggle_switch/toggle_switch.dart\n',
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      color: Colors.grey[600],
+                                    ))
+                              ],
+                            )
+                        ),
                       ),
                     ),
                     Container(
@@ -506,7 +515,6 @@ class Page3 extends StatelessWidget {
                 ),
               )
           ),
-        )
     );
   }
 }

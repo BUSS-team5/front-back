@@ -4,7 +4,6 @@ import 'package:test_project/model/provider.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-
 import 'bus_arrival.dart';
 import 'bus_route.dart';
 import 'restaurant.dart';

@@ -227,6 +227,8 @@ class _MyAppState extends State<restaurant> {
   }
 
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
+    print(size);
     return Scaffold(
         backgroundColor: Colors.grey[800],
         body: Container(
@@ -293,17 +295,17 @@ class _MyAppState extends State<restaurant> {
                           }
                           else{
                             return SizedBox(
-                              height: 550,
-                              child: NaverMap(
-                                onMapCreated: onMapCreated,
-                                useSurface: true,
-                                mapType: _mapType,
-                                locationButtonEnable: true,
-                                indoorEnable: true,
-                                initLocationTrackingMode: LocationTrackingMode.NoFollow,
-                                initialCameraPosition: CameraPosition(target: LatLng(36.12860209326003,128.33222703225402)),
-                                markers: temp,
-                              ),
+                              height: size.height*0.75,
+                                  child: NaverMap(
+                                    onMapCreated: onMapCreated,
+                                    useSurface: true,
+                                    mapType: _mapType,
+                                    locationButtonEnable: true,
+                                    indoorEnable: true,
+                                    initLocationTrackingMode: LocationTrackingMode.NoFollow,
+                                    initialCameraPosition: CameraPosition(target: LatLng(36.12860209326003,128.33222703225402)),
+                                    markers: temp,
+                                  ),
                             );
                           }
                         },
@@ -350,10 +352,5 @@ class _MyAppState extends State<restaurant> {
   Future<void> _goToNewPosition() async {
     final NaverMapController controller = await _controller.future;
     controller.moveCamera(CameraUpdate.toCameraPosition(_AfterPosition!));
-  }
-  void _onMarkerTap(Marker? marker,Map<String,int> iconSize){
-    // int pos = temp.indexWhere((m) => m.markerId == marker!.markerId);
-    setState(() {
-    });
   }
 }
