@@ -228,7 +228,7 @@ class _MyAppState extends State<restaurant> {
 
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    print(size);
+
     return Scaffold(
         backgroundColor: Colors.grey[800],
         body: Container(

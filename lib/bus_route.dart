@@ -26,7 +26,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-  final List<Map<String, dynamic>> _allUsers = [
+  final List<Map<String, dynamic>> _allRoutes = [
     {"id": "190", "name": "구미역 / 오성예식장앞 / 신평시장 / 비산벽산아파트 / 금오공대종점"},
     {"id": "190-1", "name": "구미역 / 오성예식장앞 / 신평시장 / 비산벽산아파트 / 삼구아파트  "},
     {"id": "190-2", "name": "구미역 / 오성예식장앞 / 신평시장 / 비산벽산아파트 / 금오공대종점 / 삼구아파트"},
@@ -50,11 +50,11 @@ class _HomePageState extends State<HomePage> {
   ];
 
   // This list holds the data for the list view
-  List<Map<String, dynamic>> _foundUsers = [];
+  List<Map<String, dynamic>> _foundRoutes = [];
   @override
   initState() {
 
-    _foundUsers = _allUsers;
+    _foundRoutes = _allRoutes;
     super.initState();
   }
 
@@ -63,16 +63,16 @@ class _HomePageState extends State<HomePage> {
     List<Map<String, dynamic>> results = [];
     if (enteredKeyword.isEmpty) {
       // if the search field is empty or only contains white-space, we'll display all users
-      results = _allUsers;
+      results = _allRoutes;
     } else {
-      results = _allUsers
+      results = _allRoutes
           .where((user) =>
           user["id"].toLowerCase().contains(enteredKeyword.toLowerCase()))
           .toList();
       // we use the toLowerCase() method to make it case-insensitive
     }
     setState(() {
-      _foundUsers = results;
+      _foundRoutes = results;
     });
 
   }
@@ -107,20 +107,20 @@ class _HomePageState extends State<HomePage> {
                   labelText: '버스 번호를 입력하세요.', suffixIcon: Icon(Icons.search)),
             ),
             Expanded(
-              child: _foundUsers.isNotEmpty
+              child: _foundRoutes.isNotEmpty
                   ? ListView.builder(
-                itemCount: _foundUsers.length,
+                itemCount: _foundRoutes.length,
                 itemBuilder: (context, index) => Card(
-                  key: ValueKey(_foundUsers[index]["id"]),
+                  key: ValueKey(_foundRoutes[index]["id"]),
                   color: Colors.black38,
                   elevation: 4,
                   margin: const EdgeInsets.symmetric(vertical: 10),
                   child: ListTile(
                     leading: Text(
-                      _foundUsers[index]["id"].toString(),
+                      _foundRoutes[index]["id"].toString(),
                       style: const TextStyle(fontSize: 20, color:Colors.white),
                     ),
-                    title: Text(_foundUsers[index]['name'],
+                    title: Text(_foundRoutes[index]['name'],
                         style:TextStyle(
                           fontSize: 14,
                           color:Colors.white,

@@ -1,6 +1,6 @@
 # BUSS
-
-A new Flutter project.
+ - 시연 영상 : https://youtu.be/In8eihiIbeA 
+ - 갤럭시탭 시연 영상: https://youtu.be/KGxK9MfnMjY
 
 ## Getting Started
 
